@@ -8,6 +8,12 @@ public class User {
     private Integer Role;
 
 
+
+    public User() {}
+    public User( Integer id ,String Email) {
+        this.id = id;
+        this.Email = Email;
+    }
     public User(Integer id, String email, String password, Integer role) {
         this.id = id;
         Email = email;

@@ -41,10 +41,7 @@
                 <columns>
                     <TableColumn fx:id="idColumn" text="ID" />
                     <TableColumn fx:id="nameColumn" text="Name" />
-                    <TableColumn fx:id="emailColumn" text="Email" />
-                    <TableColumn fx:id="courseColumn" text="Course" />
-                    <TableColumn fx:id="statusColumn" text="Status" />
-
+                    <TableColumn fx:id="PrenomColumn" text="Prenom" />
                 </columns>
             </TableView>
 

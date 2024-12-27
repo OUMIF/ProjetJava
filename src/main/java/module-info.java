@@ -12,6 +12,7 @@ module org.example.projetjava {
     opens controller to javafx.fxml;
 
     exports controller.Professeur;
+    exports model;
 
     opens controller.Professeur to javafx.fxml;// Exporte le package vues
 }

@@ -1,5 +1,6 @@
 package controller.Professeur;
 import dao.ProfesseurImp;
+import dao.UserImp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,23 +30,19 @@ public class ProfesseurEtud {
     private TableColumn<Etudiant, Integer> idColumn;
     @FXML
     private TableColumn<Etudiant, String> nameColumn;
+
     @FXML
-    private TableColumn<Etudiant, String> emailColumn;
-    @FXML
-    private TableColumn<Etudiant, String> courseColumn;
-    @FXML
-    private TableColumn<Etudiant, String> statusColumn;
+    private TableColumn<Etudiant, String> PrenomColumn;
 
     private ProfesseurImp professeurImp = new ProfesseurImp();
+    private UserImp usImp = new UserImp();
 
     @FXML
     public void initialize() {
         // Initialisation des colonnes du tableau des étudiants
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        courseColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));  // Assurez-vous que le getter s'appelle getNom()
+        PrenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));  // Assurez-vous que le getter s'appelle getPrenom()
 
         loadModules();
     }
@@ -55,7 +52,7 @@ public class ProfesseurEtud {
         if (modules != null && !modules.isEmpty()) {
             moduleComboBox.getItems().addAll(modules);
 
-            // Configurer le StringConverter pour afficher les noms des modules
+
             moduleComboBox.setConverter(new StringConverter<>() {
                 @Override
                 public String toString(Module module) {
@@ -64,12 +61,12 @@ public class ProfesseurEtud {
 
                 @Override
                 public Module fromString(String string) {
-                    // Ce cas est rarement utilisé, donc retourner null est acceptable
+
                     return null;
                 }
             });
 
-            // Configurer le CellFactory pour afficher les noms des modules dans la liste déroulante
+
             moduleComboBox.setCellFactory(param -> new ListCell<>() {
                 @Override
                 protected void updateItem(Module module, boolean empty) {
@@ -83,6 +80,8 @@ public class ProfesseurEtud {
             });
         }
     }
+
+
 
     @FXML
     protected void onHelloButtonClick() {
@@ -169,11 +168,32 @@ public class ProfesseurEtud {
 
     @FXML
     protected void onModuleSelected() {
+
         Module selectedModule = moduleComboBox.getValue();
         if (selectedModule != null) {
-            List<Etudiant> students = professeurImp.listeEtudiants(selectedModule.getId());
+
+            int moduleId = selectedModule.getId();
+            List<Etudiant> students = professeurImp.listeEtudiants(moduleId);
+            System.out.println("Étudiants du module : " + students);
+
+
             studentTable.getItems().clear();
+
+            // Ajouter les étudiants à la TableView
             studentTable.getItems().addAll(students);
+
+
+            for (Etudiant etudiant : students) {
+                Integer id = etudiant.getId();
+                String studentName = etudiant.getNom();
+                String studentPrenom = etudiant.getPrenom();
+                System.out.println(studentName + " " + studentPrenom + " - " + studentPrenom);
+            }
         }
     }
+
+
+
+
+
 }
