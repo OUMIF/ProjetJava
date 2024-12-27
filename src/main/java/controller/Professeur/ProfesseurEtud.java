@@ -1,12 +1,10 @@
-package controller;
-
+package controller.Professeur;
 import dao.ProfesseurImp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -16,7 +14,8 @@ import model.Module;
 import java.io.IOException;
 import java.util.List;
 
-public class ProfesseurController {
+public class ProfesseurEtud {
+
     @FXML
     private Label welcomeText;
 
@@ -47,7 +46,6 @@ public class ProfesseurController {
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         courseColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
 
         loadModules();
     }
@@ -86,21 +84,24 @@ public class ProfesseurController {
         }
     }
 
-
-
-
-
-
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
 
-
     @FXML
     protected void onDashboardButtonClick() {
-
-        System.out.println("Dashboard button clicked");
+        // Logique pour revenir au tableau de bord
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/ProfesseurInterface/Dashboard.fxml"));
+            BorderPane root = loader.load();
+            Stage stage = (Stage) welcomeText.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -119,81 +120,60 @@ public class ProfesseurController {
 
     @FXML
     protected void onCoursesButtonClick() {
-        System.out.println("Gestion des professeurs button clicked");
+        System.out.println("Gestion des modules button clicked");
     }
-
 
     @FXML
     protected void onReportsButtonClick() {
         try {
-            // Charger le fichier FXML de la nouvelle scène
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/ProfesseurInterface/ListesEtudiants.fxml"));
-            BorderPane root = loader.load();  // Changer AnchorPane en BorderPane
-
-            // Récupérer le stage de l'un des composants visibles
-            Stage stage = (Stage) welcomeText.getScene().getWindow();  // Si welcomeText est bien attaché à la scène
-
-            // Créer une nouvelle scène avec le contenu chargé
+            BorderPane root = loader.load();
+            Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(root);
-
-            // Appliquer la nouvelle scène à la fenêtre actuelle
             stage.setScene(scene);
-            stage.show(); // Afficher la scène
+            stage.show();
         } catch (IOException e) {
-            e.printStackTrace(); // Gérer les erreurs de chargement du fichier FXML
+            e.printStackTrace();
         }
     }
 
     @FXML
     protected void onSettingsButtonClick() {
-        // Ajouter votre logique ici pour l'action du bouton gestion des modules
         System.out.println("Gestion des modules button clicked");
     }
 
     @FXML
     protected void onLogoutButtonClick() {
-        // Ajouter votre logique ici pour l'action du bouton logout
         System.out.println("Logout button clicked");
     }
 
-    // Exemple d'autres méthodes pour la gestion des étudiants (ajouter, modifier, supprimer)
     @FXML
     protected void onAddStudentButtonClick() {
-        // Ajouter votre logique ici pour l'ajout d'un étudiant
         System.out.println("Add student button clicked");
     }
 
     @FXML
     protected void onEditStudentButtonClick() {
-        // Ajouter votre logique ici pour la modification d'un étudiant
         System.out.println("Edit student button clicked");
     }
 
     @FXML
     protected void onDeleteStudentButtonClick() {
-        // Ajouter votre logique ici pour la suppression d'un étudiant
         System.out.println("Delete student button clicked");
     }
 
     @FXML
     protected void onSearchButtonClick() {
-        // Ajouter votre logique ici pour la recherche d'un étudiant
         System.out.println("Search student button clicked");
     }
 
     @FXML
-    protected void  onModuleSelected()  {
+    protected void onModuleSelected() {
         Module selectedModule = moduleComboBox.getValue();
         if (selectedModule != null) {
-            // Récupérer les étudiants associés au module sélectionné
             List<Etudiant> students = professeurImp.listeEtudiants(selectedModule.getId());
-            // Afficher les étudiants dans le tableau
             studentTable.getItems().clear();
             studentTable.getItems().addAll(students);
         }
     }
-
-
-
-
 }

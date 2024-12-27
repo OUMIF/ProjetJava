@@ -9,5 +9,9 @@ module org.example.projetjava {
     exports org.example.projetjava;  // Exporte le package principal
     exports vues;
     exports controller;
-    opens controller to javafx.fxml;  // Exporte le package vues
+    opens controller to javafx.fxml;
+
+    exports controller.Professeur;
+
+    opens controller.Professeur to javafx.fxml;// Exporte le package vues
 }
