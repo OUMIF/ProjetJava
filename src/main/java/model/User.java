@@ -21,6 +21,11 @@ public class User {
         Role = role;
     }
 
+    public User(int anInt, String string) {
+        this.id = anInt;
+        this.Email = string;
+    }
+
     public Integer getRole() {
         return Role;
     }
@@ -52,5 +57,10 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", email=" + Email + ", role=" + Role + "]";
+    }
+
 
 }
