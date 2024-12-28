@@ -6,9 +6,9 @@ public class DatabaseConnection {
 
     private static DatabaseConnection instance;
     private Connection connection;
-    private String url = "jdbc:mysql://localhost:3306/ProjetJava";
-    private final String user = "root";
-    private final String password = "";
+    private String url = "jdbc:postgresql://localhost:5432/ProjetJava";
+    private final String user = "postgres";
+    private final String password = "2003";
 
 
     private DatabaseConnection() {
