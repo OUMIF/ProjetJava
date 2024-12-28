@@ -11,7 +11,7 @@
       <!-- Image moved to the left corner and referenced from the resources folder -->
       <ImageView fitHeight="87.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
         <image>
-          <Image url="@logoensa.jpeg" />
+          <Image url="@ProfesseurInterface/logoensa.jpeg" />
         </image>
       </ImageView>
       <Label prefHeight="35.0" prefWidth="434.0" style="-fx-text-fill: white; -fx-font-size: 24px;" text="Welcome to the  Dashboard" />

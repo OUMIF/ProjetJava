@@ -1,11 +1,13 @@
 module org.example.projetjava {
     requires javafx.controls;
     requires javafx.fxml;
-    requires com.dlsc.formsfx;
     requires java.sql;
+    exports controller; // Add this line to export the controller package
+    opens controller to javafx.fxml;
+    exports main; // Exporter le package main
+    opens main to javafx.fxml;
 
-    opens org.example.projetjava to javafx.fxml;  // Ouvre le package principal pour javafx.fxml
-    opens vues to javafx.fxml;  // Ouvre le package vues pour javafx.fxml
-    exports org.example.projetjava;  // Exporte le package principal
-    exports vues;  // Exporte le package vues
+    opens controller.Professeur to javafx.fxml;
+
+// Ouvrir le package main à JavaFX pour permettre le chargement de fxml
 }

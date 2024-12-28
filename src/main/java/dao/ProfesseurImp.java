@@ -52,10 +52,10 @@ public class ProfesseurImp {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String Sql = "SELECT * \n" +
-                      "FROM modules m\n" +
-                      "JOIN assigner a ON a.idmodule = m.idmodule\n" +
-                      "JOIN professeurs p ON p.iduser = a.iduser\n" +
-                      "WHERE p.iduser = ?;\n";
+                "FROM modules m\n" +
+                "JOIN assigner a ON a.idmodule = m.idmodule\n" +
+                "JOIN professeurs p ON p.iduser = a.iduser\n" +
+                "WHERE p.iduser = ?;\n";
 
         try {
             modules = new ArrayList<>();
