@@ -118,8 +118,17 @@ public class ProfesseurEtud {
     }
 
     @FXML
-    protected void onCoursesButtonClick() {
-        System.out.println("Gestion des modules button clicked");
+    private void onCoursesButtonClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/ProfesseurInterface/AffichageModules.fxml"));
+            BorderPane root = loader.load();
+            Stage stage = (Stage) welcomeText.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
