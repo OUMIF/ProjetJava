@@ -14,7 +14,7 @@
                     <Image url="@logoensa.jpeg" />
                 </image>
             </ImageView>
-            <Label prefHeight="35.0" prefWidth="434.0" style="-fx-text-fill: white; -fx-font-size: 24px;" text="Welcome to the Dashboard" />
+            <Label prefHeight="35.0" prefWidth="434.0" style="-fx-text-fill: white; -fx-font-size: 24px;" text="Etudiants" />
         </HBox>
     </top>
 
@@ -31,7 +31,7 @@
     <!-- Content Area -->
     <center>
         <VBox alignment="CENTER" prefHeight="547.0" prefWidth="570.0" spacing="20.0" style="-fx-background-color: #F4F6F9; -fx-padding: 20;">
-            <Label fx:id="welcomeText" style="-fx-font-size: 20px;" text="Welcome to the Admin Dashboard" />
+            <Label fx:id="welcomeText" style="-fx-font-size: 20px;" text="Selectionner le Module ou chercher directement votre Etudiant" />
 
             <!-- Module Selection -->
             <ComboBox fx:id="moduleComboBox" onAction="#onModuleSelected" prefWidth="300.0" />
@@ -40,16 +40,17 @@
             <TableView fx:id="studentTable" prefHeight="400" prefWidth="600">
                 <columns>
                     <TableColumn fx:id="idColumn" text="ID" />
-                    <TableColumn fx:id="nameColumn" text="Name" />
+                    <TableColumn fx:id="nameColumn" text="Nom" />
                     <TableColumn fx:id="PrenomColumn" text="Prenom" />
                 </columns>
             </TableView>
 
             <!-- Action Buttons -->
             <HBox alignment="CENTER" spacing="10">
-                <TextField promptText="Search Student" style="-fx-padding: 10;" />
+                <TextField fx:id="searchField" promptText="Search Student" style="-fx-padding: 10;" />
                 <Button onAction="#onSearchButtonClick" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" />
             </HBox>
+
         </VBox>
     </center>
 

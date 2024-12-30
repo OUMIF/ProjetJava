@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Etudiant;
 import model.Module;
+import util.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,8 +35,12 @@ public class ProfesseurEtud {
     @FXML
     private TableColumn<Etudiant, String> PrenomColumn;
 
+
+    @FXML
+    private TextField searchField;
+
     private ProfesseurImp professeurImp = new ProfesseurImp();
-    private UserImp usImp = new UserImp();
+
 
     @FXML
     public void initialize() {
@@ -172,8 +177,20 @@ public class ProfesseurEtud {
 
     @FXML
     protected void onSearchButtonClick() {
-        System.out.println("Search student button clicked");
+        String searchQuery = searchField.getText().trim();  // Retrieve the text from the search field
+        if (!searchQuery.isEmpty()) {
+            List<Etudiant> etudiants = professeurImp.searchEtudiantByName(searchQuery);
+            if (etudiants != null && !etudiants.isEmpty()) {
+                studentTable.getItems().setAll(etudiants);  // Display the students in the table
+            } else {
+                System.out.println("No students found with the given name.");
+                // Optionally, show an alert message to the user
+            }
+        } else {
+            System.out.println("Please enter a search query.");
+        }
     }
+
 
     @FXML
     protected void onModuleSelected() {
