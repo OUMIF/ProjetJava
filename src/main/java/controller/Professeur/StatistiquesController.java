@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.User;
+import util.Session;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -28,6 +30,8 @@ public class StatistiquesController {
 
     private ProfesseurImp professeurImp = new ProfesseurImp();
 
+    User ue = Session.getCurrentUser();
+
     @FXML
     public void initialize() {
         // Vérification des éléments FXML
@@ -40,8 +44,8 @@ public class StatistiquesController {
     private void loadStatistics() {
         try {
             // Exemple de récupération des données simulées depuis ProfesseurImp
-            int studentCount = professeurImp.getNombreEtudiants(1); // Exemple avec id du professeur = 1
-            int modulesCount = professeurImp.getNombreModules(1);  // Exemple avec id du professeur = 1
+            int studentCount = professeurImp.getNombreEtudiants(ue.getId());
+            int modulesCount = professeurImp.getNombreModules(ue.getId()); 
             String lastLogin = getLastLoginTime();
 
             // Mise à jour des labels dans l'interface

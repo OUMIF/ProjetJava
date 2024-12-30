@@ -2,7 +2,9 @@ package dao;
 
 import model.Etudiant;
 import model.Module;
+import model.User;
 import util.DatabaseConnection;
+import util.Session;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class ProfesseurImp {
 
     Connection co = DatabaseConnection.getInstance().getConnection();
+    User ue = Session.getCurrentUser();
 
 
     public List<Etudiant> listeEtudiants(Integer id){
@@ -33,7 +36,7 @@ public class ProfesseurImp {
         try{
             etudiants = new ArrayList<Etudiant>();
             ps = co.prepareStatement(Sql);
-            ps.setInt(1,id);
+            ps.setInt(ue.getId(),id);
             rs = ps.executeQuery();
             while (rs.next()){
                 etudiant = new Etudiant(rs.getString(6),rs.getString(2),rs.getString(5),rs.getString(4),rs.getString(3),rs.getInt(1));
@@ -60,7 +63,7 @@ public class ProfesseurImp {
         try {
             modules = new ArrayList<>();
             ps = co.prepareStatement(Sql);
-            ps.setInt(1,id);
+            ps.setInt(ue.getId(),id);
             rs = ps.executeQuery();
             while (rs.next()){
                 md = new Module();
@@ -124,7 +127,7 @@ public class ProfesseurImp {
                 "WHERE p.iduser = ?";
         try {
             ps = co.prepareStatement(query);
-            ps.setInt(1, professeurId);
+            ps.setInt(ue.getId(), professeurId);
             rs = ps.executeQuery();
             if (rs.next()) {
                 moduleCount = rs.getInt("module_count");
@@ -154,7 +157,7 @@ public class ProfesseurImp {
                 "WHERE p.iduser = ?";
         try {
             ps = co.prepareStatement(query);
-            ps.setInt(1, professeurId);
+            ps.setInt(ue.getId(), professeurId);
             rs = ps.executeQuery();
             if (rs.next()) {
                 studentCount = rs.getInt("student_count");

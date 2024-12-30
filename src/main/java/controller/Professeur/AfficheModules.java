@@ -105,7 +105,7 @@ public class AfficheModules {
     @FXML
     private void onRefreshButtonClick() {
         System.out.println("Refresh button clicked");
-        loadModules(); // Recharge les modules dans la table
+        loadModules();
     }
 
 }

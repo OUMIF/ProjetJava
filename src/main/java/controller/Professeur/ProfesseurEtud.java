@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Etudiant;
 import model.Module;
+import model.User;
 import util.Session;
 
 import java.io.IOException;
@@ -41,6 +42,8 @@ public class ProfesseurEtud {
 
     private ProfesseurImp professeurImp = new ProfesseurImp();
 
+    private User ue = Session.getCurrentUser();
+
 
     @FXML
     public void initialize() {
@@ -53,10 +56,21 @@ public class ProfesseurEtud {
     }
 
     private void loadModules() {
-        List<Module> modules = professeurImp.getModuleAssigner(1);
+        // Récupérer l'utilisateur authentifié
+        User currentUser = Session.getCurrentUser();
+        if (currentUser == null) {
+            System.out.println("Aucun utilisateur authentifié.");
+            return;
+        }
+
+        // Récupérer l'ID de l'utilisateur
+        int userId = currentUser.getId();
+        System.out.println("Utilisateur authentifié avec l'ID : " + userId);
+
+        // Charger les modules assignés à cet utilisateur
+        List<Module> modules = professeurImp.getModuleAssigner(userId);
         if (modules != null && !modules.isEmpty()) {
             moduleComboBox.getItems().addAll(modules);
-
 
             moduleComboBox.setConverter(new StringConverter<>() {
                 @Override
@@ -66,25 +80,14 @@ public class ProfesseurEtud {
 
                 @Override
                 public Module fromString(String string) {
-
                     return null;
                 }
             });
-
-
-            moduleComboBox.setCellFactory(param -> new ListCell<>() {
-                @Override
-                protected void updateItem(Module module, boolean empty) {
-                    super.updateItem(module, empty);
-                    if (empty || module == null) {
-                        setText(null);
-                    } else {
-                        setText(module.getNomModule());
-                    }
-                }
-            });
+        } else {
+            System.out.println("Aucun module assigné trouvé.");
         }
     }
+
 
 
 
