@@ -45,7 +45,7 @@ public class StatistiquesController {
         try {
             // Exemple de récupération des données simulées depuis ProfesseurImp
             int studentCount = professeurImp.getNombreEtudiants(ue.getId());
-            int modulesCount = professeurImp.getNombreModules(ue.getId()); 
+            int modulesCount = professeurImp.getNombreModules(ue.getId());
             String lastLogin = getLastLoginTime();
 
             // Mise à jour des labels dans l'interface
