@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Etudiant;
@@ -155,12 +156,38 @@ public class ProfesseurEtud {
 
     @FXML
     protected void onSettingsButtonClick() {
-        System.out.println("Gestion des modules button clicked");
+        try {
+            // Charge le fichier FXML correspondant
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+
+            // Remplace BorderPane par HBox
+            HBox root = loader.load();
+
+            // Obtenir la scène et la stage actuelles
+            Stage stage = (Stage) welcomeText.getScene().getWindow();
+            Scene scene = new Scene(root);
+
+            // Appliquer la nouvelle scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     protected void onLogoutButtonClick() {
-        System.out.println("Logout button clicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+            BorderPane root = loader.load();
+            Stage stage = (Stage) welcomeText.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

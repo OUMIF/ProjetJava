@@ -1,5 +1,6 @@
 package controller.Professeur;
 
+import javafx.scene.layout.HBox;
 import model.Module;
 import dao.ProfesseurImp;
 import javafx.fxml.FXML;
@@ -93,8 +94,24 @@ public class AfficheModules {
     }
 
     @FXML
-    private void onSettingsButtonClick() {
-        System.out.println("Gestion des paramètres button clicked");
+    protected void onSettingsButtonClick() {
+        try {
+            // Charge le fichier FXML correspondant
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+
+            // Remplace BorderPane par HBox
+            HBox root = loader.load();
+
+            // Obtenir la scène et la stage actuelles
+            Stage stage = (Stage) welcomeText.getScene().getWindow();
+            Scene scene = new Scene(root);
+
+            // Appliquer la nouvelle scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
