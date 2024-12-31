@@ -1,7 +1,11 @@
 package controller.Professeur;
 
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -58,9 +62,19 @@ public class DashboardController {
     }
 
     @FXML
-    private void onSettingsButtonClick() {
-        // Logique pour gérer les paramètres ou déconnexion
-        System.out.println("Gestion des paramètres button clicked");
+    private void onSettingsButtonClick(ActionEvent event) {
+        try {
+            // Assuming you're trying to load the login screen after logout
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
