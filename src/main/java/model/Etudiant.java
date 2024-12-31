@@ -65,4 +65,15 @@ public class Etudiant {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+    @Override
+    public String toString() {
+        return "Etudiant{" +
+                "id=" + id +
+                ", nom='" + Nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", matricule='" + Matricule + '\'' +
+                ", dateNaissance='" + DateNaissance + '\'' +
+                ", promotion='" +   Promotion + '\'' +
+                '}';
+    }
 }
