@@ -13,8 +13,8 @@ public class InscriptionImp {
     }
 
     public void insertInscription(int idEtudiant, String moduleName) throws SQLException {
-        String sql = "INSERT INTO Inscrire (IdEtudiant, IdModule, DateInscription) " +
-                "VALUES (?, (SELECT IdModule FROM Modules WHERE NomModule = ?), CURRENT_DATE)";
+        String sql = "INSERT INTO Inscrire (idetudiant, idmodule, dateinscription) " +
+                "VALUES (?, (SELECT idmodule FROM modules WHERE nommodule = ?), CURRENT_DATE)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, idEtudiant);
             stmt.setString(2, moduleName);
