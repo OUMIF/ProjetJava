@@ -47,7 +47,7 @@ public class LoginController {
             if (user.getRole() == 1) {
                 loadView("/vues/admin.fxml", stage);
             } else if (user.getRole() == 2) {
-                loadView("/vues/secretaire.fxml", stage);
+                loadView("/vues/secretaire/SecretairePageInit.fxml", stage);
             } else if (user.getRole() == 3) {
                 loadView("/vues/ProfesseurInterface/ProfesseurPageInit.fxml", stage);
             } else {
