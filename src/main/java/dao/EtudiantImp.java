@@ -16,7 +16,7 @@ public class EtudiantImp {
 
     // Insert a new student into the database
     public int insertEtudiant(String matricule, String nom, String prenom, String promotion, String dateNaissance) throws SQLException {
-        String sql = "INSERT INTO Etudiants (Matricule, Nom, Prenom, DateNaissance, Promotion) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO etudiants (matricule, nom, prenom, datenaissance, promotion) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, matricule);
             stmt.setString(2, nom);
@@ -37,7 +37,7 @@ public class EtudiantImp {
 
     // Check if a student exists based on matricule
     public boolean isStudentExists(String matricule) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM Etudiants WHERE Matricule = ?";
+        String sql = "SELECT COUNT(*) FROM Etudiants WHERE matricule = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matricule);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -48,7 +48,7 @@ public class EtudiantImp {
 
     // Retrieve all students from the database
     public List<Etudiant> getAllStudents() throws SQLException {
-        String sql = "SELECT IdEtudiant, Matricule, Nom, Prenom, DateNaissance, Promotion FROM Etudiants";
+        String sql = "SELECT idetudiant, matricule, nom, prenom, datenaissance, promotion FROM etudiants";
         List<Etudiant> students = new ArrayList<>();
 
         try (PreparedStatement stmt = connection.prepareStatement(sql);
@@ -71,14 +71,14 @@ public class EtudiantImp {
 
     // Delete a student by ID
     public boolean deleteStudentById(int id) throws SQLException {
-        String sql = "DELETE FROM Etudiants WHERE IdEtudiant = ?";
+        String sql = "DELETE FROM etudiants WHERE idetudiant = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             return stmt.executeUpdate() > 0; // Return true if a row was deleted
         }
     }
     public void updateStudent(Etudiant student) throws SQLException {
-        String query = "UPDATE Etudiants SET matricule = ?, nom = ?, prenom = ?, promotion = ? WHERE IdEtudiant = ?";
+        String query = "UPDATE etudiants SET matricule = ?, nom = ?, prenom = ?, promotion = ? WHERE idetudiant = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, student.getMatricule());
             stmt.setString(2, student.getNom());

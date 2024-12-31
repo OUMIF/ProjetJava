@@ -61,7 +61,7 @@ public class Controller {
     }
 
     private void populateModules() {
-        String sql = "SELECT NomModule FROM Modules";
+        String sql = "SELECT nommodule FROM Modules";
 
         new Thread(() -> {
             try (PreparedStatement stmt = connection.prepareStatement(sql);

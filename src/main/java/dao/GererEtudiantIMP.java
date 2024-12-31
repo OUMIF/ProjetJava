@@ -25,20 +25,19 @@ public class GererEtudiantIMP {
 
         int idUserSecretaire = getIdUserSecretaire(currentUser);
 
-        String query = "INSERT INTO GererEtudiant (IdUserSecretaire, IdEtudiant) VALUES (?, ?)";
+        String query = "INSERT INTO gereretudiant (idusersecretaire, idetudiant) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, idUserSecretaire);
             statement.setInt(2, idEtudiant);
             statement.executeUpdate();
         } catch (SQLException e) {
-            // Log error or rethrow the exception
             throw new SQLException("Failed to insert GererEtudiant record.", e);
         }
     }
 
     // Method to get IdUserSecretaire from the current logged-in user
     private int getIdUserSecretaire(User currentUser) throws SQLException {
-        String query = "SELECT IdUser FROM Users WHERE Email = ?";
+        String query = "SELECT iduser FROM users WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             // Log the email being queried for debugging purposes
             System.out.println("Querying for user with email: " + currentUser.getEmail());
@@ -47,7 +46,7 @@ public class GererEtudiantIMP {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     // Return the IdUser from Users table
-                    return resultSet.getInt("IdUser");
+                    return resultSet.getInt("iduser");
                 } else {
                     // No user found with the provided email
                     throw new SQLException("User not found for email: " + currentUser.getEmail());
