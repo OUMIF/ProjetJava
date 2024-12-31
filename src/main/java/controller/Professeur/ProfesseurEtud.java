@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Etudiant;
 import model.Module;
+import model.User;
+import util.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,8 +36,14 @@ public class ProfesseurEtud {
     @FXML
     private TableColumn<Etudiant, String> PrenomColumn;
 
+
+    @FXML
+    private TextField searchField;
+
     private ProfesseurImp professeurImp = new ProfesseurImp();
-    private UserImp usImp = new UserImp();
+
+    private User ue = Session.getCurrentUser();
+
 
     @FXML
     public void initialize() {
@@ -48,10 +56,21 @@ public class ProfesseurEtud {
     }
 
     private void loadModules() {
-        List<Module> modules = professeurImp.getModuleAssigner(1);
+        // Récupérer l'utilisateur authentifié
+        User currentUser = Session.getCurrentUser();
+        if (currentUser == null) {
+            System.out.println("Aucun utilisateur authentifié.");
+            return;
+        }
+
+        // Récupérer l'ID de l'utilisateur
+        int userId = currentUser.getId();
+        System.out.println("Utilisateur authentifié avec l'ID : " + userId);
+
+        // Charger les modules assignés à cet utilisateur
+        List<Module> modules = professeurImp.getModuleAssigner(userId);
         if (modules != null && !modules.isEmpty()) {
             moduleComboBox.getItems().addAll(modules);
-
 
             moduleComboBox.setConverter(new StringConverter<>() {
                 @Override
@@ -61,25 +80,14 @@ public class ProfesseurEtud {
 
                 @Override
                 public Module fromString(String string) {
-
                     return null;
                 }
             });
-
-
-            moduleComboBox.setCellFactory(param -> new ListCell<>() {
-                @Override
-                protected void updateItem(Module module, boolean empty) {
-                    super.updateItem(module, empty);
-                    if (empty || module == null) {
-                        setText(null);
-                    } else {
-                        setText(module.getNomModule());
-                    }
-                }
-            });
+        } else {
+            System.out.println("Aucun module assigné trouvé.");
         }
     }
+
 
 
 
@@ -172,8 +180,20 @@ public class ProfesseurEtud {
 
     @FXML
     protected void onSearchButtonClick() {
-        System.out.println("Search student button clicked");
+        String searchQuery = searchField.getText().trim();  // Retrieve the text from the search field
+        if (!searchQuery.isEmpty()) {
+            List<Etudiant> etudiants = professeurImp.searchEtudiantByName(searchQuery);
+            if (etudiants != null && !etudiants.isEmpty()) {
+                studentTable.getItems().setAll(etudiants);  // Display the students in the table
+            } else {
+                System.out.println("No students found with the given name.");
+                // Optionally, show an alert message to the user
+            }
+        } else {
+            System.out.println("Please enter a search query.");
+        }
     }
+
 
     @FXML
     protected void onModuleSelected() {
