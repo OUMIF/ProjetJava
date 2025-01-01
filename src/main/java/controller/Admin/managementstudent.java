@@ -1,4 +1,4 @@
-package controller.secretaire;
+package controller.Admin;
 
 import dao.EtudiantImp;
 import javafx.collections.FXCollections;
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class StudentListController {
+public class managementstudent {
     private Etudiant selectedStudentForEdit;
     @FXML
     private Label welcomeText;
@@ -53,6 +53,8 @@ public class StudentListController {
     private TableColumn<Etudiant, String> prenomColumn;
     @FXML
     private TableColumn<Etudiant, String> promotionColumn;
+    @FXML
+    private TableColumn<Etudiant, Void> actionsColumn;
     @FXML
     private Button deleteButton;
     @FXML
@@ -184,18 +186,26 @@ public class StudentListController {
 
     @FXML
     private void onStatistiqueButtonClick() {
-        loadScene("/vues/secretaire/SecretairePageInit.fxml");
+        loadScene("/vues/ADMIN/AdminPageInit.fxml");
+    }
+    @FXML
+    public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
+        System.out.println("button clicked");
+    }
+    @FXML
+    public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
+        System.out.println("button clicked");
+    }
+    @FXML
+    public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/etudiantmanagment.fxml");
+
+    }
+    @FXML
+    public void onAjouteEtudiant(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/ajouterunetudiant.fxml");
     }
 
-    @FXML
-    private void onAjouterButtonClick() {
-        loadScene("/vues/secretaire/addstudent.fxml");
-    }
-
-    @FXML
-    private void onDisplaylisteofstudentButtonclick() {
-        loadScene("/vues/secretaire/studentlist.fxml");
-    }
 
     @FXML
     private void onDesconnected(ActionEvent event) {
