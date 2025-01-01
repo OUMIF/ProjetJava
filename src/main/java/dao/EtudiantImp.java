@@ -37,11 +37,7 @@ public class EtudiantImp {
 
     // Check if a student exists based on matricule
     public boolean isStudentExists(String matricule) throws SQLException {
-<<<<<<< HEAD
-        String sql = "SELECT COUNT(*) FROM Etudiants WHERE matricule = ?";
-=======
         String sql = "SELECT COUNT(*) FROM etudiants WHERE matricule = ?";
->>>>>>> 1513327bb9ac94b5b98da58c44743c56381a5576
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, matricule);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -75,12 +71,6 @@ public class EtudiantImp {
 
     // Delete a student by ID
     public boolean deleteStudentById(int id) throws SQLException {
-<<<<<<< HEAD
-        String sql = "DELETE FROM etudiants WHERE idetudiant = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            return stmt.executeUpdate() > 0; // Return true if a row was deleted
-=======
         String deleteInscrire = "DELETE FROM inscrire WHERE idetudiant = ?";
         String deleteGererEtudiant = "DELETE FROM gereretudiant WHERE idetudiant = ?";
         String deleteEtudiant = "DELETE FROM Etudiants WHERE idetudiant = ?";
@@ -110,17 +100,13 @@ public class EtudiantImp {
             throw ex;
         } finally {
             connection.setAutoCommit(true); // Restore auto-commit
->>>>>>> 1513327bb9ac94b5b98da58c44743c56381a5576
         }
     }
 
     public void updateStudent(Etudiant student) throws SQLException {
-<<<<<<< HEAD
-=======
         // Disable auto-commit if it's turned off
         connection.setAutoCommit(false);
 
->>>>>>> 1513327bb9ac94b5b98da58c44743c56381a5576
         String query = "UPDATE etudiants SET matricule = ?, nom = ?, prenom = ?, promotion = ? WHERE idetudiant = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, student.getMatricule());
