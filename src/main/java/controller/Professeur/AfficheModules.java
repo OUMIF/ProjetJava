@@ -124,5 +124,4 @@ public class AfficheModules {
         System.out.println("Refresh button clicked");
         loadModules();
     }
-
 }

@@ -45,7 +45,7 @@ public class LoginController {
             // Role-based redirection
             Stage stage = (Stage) loginButton.getScene().getWindow();
             if (user.getRole() == 1) {
-                loadView("/vues/admin.fxml", stage);
+                loadView("/vues/ADMIN/AdminPageInit.fxml", stage);
             } else if (user.getRole() == 2) {
                 loadView("/vues/secretaire/SecretairePageInit.fxml", stage);
             } else if (user.getRole() == 3) {

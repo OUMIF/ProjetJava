@@ -10,6 +10,7 @@ module org.example.projetjava {
 
     opens controller.Professeur to javafx.fxml;
     opens controller.secretaire to javafx.fxml;
+    opens controller.Admin to javafx.fxml;
 
 // Ouvrir le package main à JavaFX pour permettre le chargement de fxml
 }
