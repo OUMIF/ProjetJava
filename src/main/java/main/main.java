@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox; // Import HBox instead of AnchorPane
 import javafx.stage.Stage;
 
-public class main extends Application {
+public class stamain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
