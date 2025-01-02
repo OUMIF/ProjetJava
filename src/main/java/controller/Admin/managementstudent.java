@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -224,7 +223,7 @@ public class managementstudent {
     }
     @FXML
     private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/Adminmodule.fxml");
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
 
 

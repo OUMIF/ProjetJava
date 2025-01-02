@@ -178,9 +178,8 @@ public class ajouterunetudiant {
 
     @FXML
     private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/Adminmodule.fxml");
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
-
 
     @FXML
     private void onDesconnected(ActionEvent event) {

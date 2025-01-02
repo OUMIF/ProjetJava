@@ -10,7 +10,7 @@
         <HBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="856.0" spacing="10.0" style="-fx-background-color: #2E3B4E; -fx-padding: 10;">
             <ImageView fitHeight="87.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@logoensa.jpeg" />
+                    <Image url="@../logoensa.jpeg" />
                 </image>
             </ImageView>
             <Label prefHeight="35.0" prefWidth="434.0" style="-fx-text-fill: white; -fx-font-size: 24px;" text="Welcome to the Dashboard" />
@@ -44,7 +44,7 @@
             </GridPane>
 
             <!-- Submit Button -->
-            <Button onAction="#onSubmitForm" text="Ajouter Module" style="-fx-background-color: #3A4B63; -fx-text-fill: white; -fx-border-radius: 5px; -fx-font-size: 16px; -fx-padding: 10 20;" />
+            <Button fx:id="addModule" onAction="#onSubmitForm" text="Ajouter Module" style="-fx-background-color: #3A4B63; -fx-text-fill: white; -fx-border-radius: 5px; -fx-font-size: 16px; -fx-padding: 10 20;" />
         </VBox>
     </center>
 </BorderPane>

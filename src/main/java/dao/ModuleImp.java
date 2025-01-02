@@ -96,12 +96,49 @@ public class ModuleImp {
         return false;
     }
 
+    public boolean updateModule(Module m, User ue) {
+        String sqlUpdateModule = "UPDATE modules SET nomModule = ?, codeModule = ? WHERE idmodule = ?";
+        String sqlUpdateAjouteModule = "UPDATE ajoutemodule SET iduser = ?, dateajout = ? WHERE idmodule = ?";
+
+        try (PreparedStatement psUpdateModule = co.prepareStatement(sqlUpdateModule)) {
+            // Mise à jour dans la table "modules"
+            psUpdateModule.setString(1, m.getNomModule());
+            psUpdateModule.setString(2, m.getCodeModule());
+            psUpdateModule.setInt(3, m.getId());
+
+            int affectedRowsModule = psUpdateModule.executeUpdate();
+
+            if (affectedRowsModule > 0) {
+                // Mise à jour dans la table "ajoutemodule"
+                try (PreparedStatement psUpdateAjouteModule = co.prepareStatement(sqlUpdateAjouteModule)) {
+                    psUpdateAjouteModule.setInt(1, ue.getId());
+                    psUpdateAjouteModule.setDate(2, Date.valueOf(LocalDate.now()));
+                    psUpdateAjouteModule.setInt(3, m.getId());
+
+                    int affectedRowsAjoute = psUpdateAjouteModule.executeUpdate();
+                    return affectedRowsAjoute > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating module: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+
     public boolean deleteModule(int id) {
+        String sqlDeleteInscrire = "DELETE FROM inscrire WHERE idmodule = ?";
         String sqlDeleteAjouteModule = "DELETE FROM ajoutemodule WHERE idmodule = ?";
         String sqlDeleteModule = "DELETE FROM modules WHERE idmodule = ?";
 
-        try (PreparedStatement psAjouteModule = co.prepareStatement(sqlDeleteAjouteModule);
+        try (PreparedStatement psInscrire = co.prepareStatement(sqlDeleteInscrire);
+             PreparedStatement psAjouteModule = co.prepareStatement(sqlDeleteAjouteModule);
              PreparedStatement psModule = co.prepareStatement(sqlDeleteModule)) {
+
+            // Suppression des dépendances dans la table "inscrire"
+            psInscrire.setInt(1, id);
+            psInscrire.executeUpdate();
 
             // Suppression dans la table "ajoutemodule"
             psAjouteModule.setInt(1, id);
@@ -118,8 +155,5 @@ public class ModuleImp {
 
         return false;
     }
-
-
-
 
 }
