@@ -222,6 +222,11 @@ public class managementstudent {
         }
 
     }
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/Adminmodule.fxml");
+    }
+
 
     private void loadScene(String fxmlPath) {
         try {

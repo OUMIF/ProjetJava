@@ -36,6 +36,11 @@ public class DashboardController {
         loadScene("/vues/ADMIN/etudiantmanagment.fxml");
 
     }
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/Adminmodule.fxml");
+    }
+
 
 
     @FXML

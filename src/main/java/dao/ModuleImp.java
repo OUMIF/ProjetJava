@@ -16,7 +16,7 @@ public class ModuleImp {
 
     Connection co = DatabaseConnection.getInstance().getConnection();
     User ue = Session.getCurrentUser();
-
+    public ModuleImp() {}
 
     public List<Module> getAll(){
 

@@ -164,17 +164,24 @@ public class ajouterunetudiant {
     }
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        System.out.println("button clicked a ");
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        System.out.println("button clicked b " );
     }
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/etudiantmanagment.fxml");
 
     }
+
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/Adminmodule.fxml");
+    }
+
+
     @FXML
     private void onDesconnected(ActionEvent event) {
         try {
