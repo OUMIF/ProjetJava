@@ -15,6 +15,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Etudiant;
+import model.User;
+import util.Session;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,6 +38,7 @@ public class AfficheModules {
     private TableColumn<Module, String> moduleCodeColumn;
 
     private ProfesseurImp professeurImp = new ProfesseurImp();
+    User ue = Session.getCurrentUser();
 
     @FXML
     public void initialize() {
@@ -48,7 +51,7 @@ public class AfficheModules {
     }
 
     private void loadModules() {
-        List<Module> modules = professeurImp.getModuleAssigner(1);
+        List<Module> modules = professeurImp.getModuleAssigner(ue.getId());
         if (modules != null) {
             modulesTable.getItems().setAll(modules);
         } else {
