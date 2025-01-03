@@ -37,14 +37,14 @@
             <!-- Form Fields -->
             <GridPane alignment="CENTER" hgap="10" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10; -fx-padding: 15; -fx-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);" vgap="10">
 
-                <Label style="-fx-text-fill: #3A4B63;" text="Nom:" GridPane.rowIndex="1" />
-                <TextField fx:id="nomField" style="-fx-background-color: #E8F0FE; -fx-border-color: #3A4B63; -fx-border-radius: 5px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label style="-fx-text-fill: #3A4B63;" text="Prenom" GridPane.rowIndex="1" />
+                <TextField fx:id="prenomField" style="-fx-background-color: #E8F0FE; -fx-border-color: #3A4B63; -fx-border-radius: 5px;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <Label style="-fx-text-fill: #3A4B63;" text="Prénom:" GridPane.rowIndex="2" />
-                <TextField fx:id="prenomField" style="-fx-background-color: #E8F0FE; -fx-border-color: #3A4B63; -fx-border-radius: 5px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label style="-fx-text-fill: #3A4B63;" text="Email" GridPane.rowIndex="2" />
+                <TextField fx:id="emailField" style="-fx-background-color: #E8F0FE; -fx-border-color: #3A4B63; -fx-border-radius: 5px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <Label style="-fx-text-fill: #3A4B63;" text="Email:" />
-                <TextField fx:id="emailField" style="-fx-background-color: #E8F0FE; -fx-border-color: #3A4B63; -fx-border-radius: 5px;" GridPane.columnIndex="1" />
+                <Label prefHeight="17.0" prefWidth="37.0" style="-fx-text-fill: #3A4B63;" text="Nom" />
+                <TextField fx:id="nomField" style="-fx-background-color: #E8F0FE; -fx-border-color: #3A4B63; -fx-border-radius: 5px;" GridPane.columnIndex="1" />
 
                 <Label style="-fx-text-fill: #3A4B63;" text="Specialite" GridPane.rowIndex="4" />
                 <TextField fx:id="specialiteField" style="-fx-background-color: #E8F0FE; -fx-border-color: #3A4B63; -fx-border-radius: 5px;" GridPane.columnIndex="1" GridPane.rowIndex="4" />

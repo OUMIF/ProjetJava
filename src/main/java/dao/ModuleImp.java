@@ -126,6 +126,21 @@ public class ModuleImp {
         return false;
     }
 
+    public Integer getIdMod(String nomModule) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " SELECT idmodule FROM modules WHERE nommodule = ?";
+        try{
+            ps = co.prepareStatement(sql);
+            ps.setString(1,nomModule);
+            rs = ps.executeQuery();
+            if(rs.next())
+                return  rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
     public boolean deleteModule(int id) {
         String sqlDeleteInscrire = "DELETE FROM inscrire WHERE idmodule = ?";

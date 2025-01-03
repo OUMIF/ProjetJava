@@ -1,0 +1,201 @@
+package controller.Admin;
+
+import dao.ModuleImp;
+import dao.ProfesseurImp;
+import dao.UserImp;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import model.Module;
+import model.Professeur;
+import model.User;
+
+import java.io.IOException;
+import java.util.List;
+
+public class GestionProfesseur {
+
+    @FXML
+    private TableView<Professeur> professeursTable;
+
+    @FXML
+    private TableColumn<Professeur, Integer> idColumn;
+
+    @FXML
+    private TableColumn<Professeur, String> nameColumn;
+
+    @FXML
+    private TableColumn<Professeur, String> PrenomColumn;
+
+    @FXML
+    private TableColumn<Professeur, String> emailColumn;
+
+    @FXML
+    private TableColumn<Professeur, String> spColumn;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private ComboBox<Module> moduleComboBox;
+
+    private ProfesseurImp professeurImp = new ProfesseurImp();
+    private UserImp userImp = new UserImp();
+    private ObservableList<Professeur> professeursList = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        PrenomColumn.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        spColumn.setCellValueFactory(new PropertyValueFactory<>("specialite"));
+
+        emailColumn.setCellValueFactory(param -> {
+            Professeur prof = param.getValue();
+            User user = userImp.getUserById(prof.getId());
+            String email = (user != null) ? user.getEmail() : "Email non disponible";
+            return new SimpleStringProperty(email);
+        });
+
+        loadModules();
+        loadProfesseurs();  // Charger les professeurs par défaut
+    }
+
+
+    private void loadModules() {
+        ModuleImp moduleImp = new ModuleImp();
+        List<Module> modules = moduleImp.getAll();
+        moduleComboBox.setItems(FXCollections.observableArrayList(modules));
+    }
+
+    private void loadProfesseurs() {
+        Module selectedModule = moduleComboBox.getSelectionModel().getSelectedItem();
+        if (selectedModule != null) {
+            Integer idmodule = selectedModule.getId(); // Utiliser l'ID du module sélectionné
+            List<Professeur> professeurs = professeurImp.getProfesseurByIdMod(idmodule);
+            if (professeurs != null) {
+                professeursList.setAll(professeurs);
+                professeursTable.setItems(professeursList);
+            } else {
+                showWarning("Aucun professeur trouvé", "La liste des professeurs est vide.");
+            }
+        } else {
+            showWarning("Module non sélectionné", "Veuillez sélectionner un module.");
+        }
+    }
+
+    @FXML
+    private void onContactButtonClick() {
+        loadProfesseurs();
+    }
+    @FXML
+    private void onAjouterModuleButtonClick() {
+        loadProfesseurs();
+    }   @FXML
+    private void onDeleteButtonClick() {
+        loadProfesseurs();
+    }   @FXML
+    private void onModuleSelected() {
+        loadProfesseurs();
+    }
+
+
+
+
+    @FXML
+    public void onSearchButtonClick() {
+     System.out.println("button clicked ");
+    }
+
+    @FXML
+    public void onAddButtonClick() {
+     System.out.println("button clicked ");
+    }
+
+    @FXML
+    public void onEditButtonClick() {
+         System.out.println("button clicked ");
+    }
+
+
+    private void showWarning(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);  // Pas de texte dans l'en-tête
+        alert.setContentText(message);  // Le message d'avertissement
+        alert.showAndWait();
+    }
+
+    // Méthode pour afficher un message d'information
+    private void showInfo(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);  // Pas de texte dans l'en-tête
+        alert.setContentText(message);  // Le message d'information
+        alert.showAndWait();
+    }
+
+
+    @FXML
+    private void onStatistiqueButtonClick() {
+        loadScene("/vues/ADMIN/AdminPageInit.fxml");
+    }
+    @FXML
+    public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
+        System.out.println("button clicked");
+    }
+    @FXML
+    public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
+        System.out.println("button clicked");
+    }
+    @FXML
+    public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/etudiantmanagment.fxml");
+
+    }
+    @FXML
+    private void onDesconnected(ActionEvent event) {
+        try {
+            // Assuming you're trying to load the login screen after logout
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/Adminmodule.fxml");
+    }
+    private void loadScene(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            BorderPane root = loader.load();
+            Stage stage = (Stage) professeursTable.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+}
+
+

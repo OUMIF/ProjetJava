@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.security.SecureRandom;
+import java.util.Map;
 import java.util.Optional;
 
 public class ProfesseurImp {
@@ -200,7 +201,7 @@ public class ProfesseurImp {
                     ps2.setString(4,pf.getSpecialite());
                     int l2 = ps2.executeUpdate();
                         if (l2 > 0) {
-                            return true;  // Si l'insertion du professeur réussit
+                            return true;
                         }
                     }
                 }
@@ -227,6 +228,71 @@ public class ProfesseurImp {
         }
         return password.toString();
     }
+
+    public boolean UpdateProf(Professeur pf, User user) {
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        String Sql1 = "UPDATE users SET email = ? WHERE id = ?";
+        String Sql2 = "UPDATE professeurs SET nom = ?, prenom = ?, specialite = ? WHERE iduser = ?";
+
+        try {
+
+            ps1 = co.prepareStatement(Sql1);
+            ps1.setString(1, user.getEmail());
+            ps1.setInt(2, user.getId());
+            int l1 = ps1.executeUpdate();
+
+
+            if (l1 > 0) {
+                ps2 = co.prepareStatement(Sql2);
+                ps2.setString(1, pf.getNom());
+                ps2.setString(2, pf.getPrenom());
+                ps2.setString(3, pf.getSpecialite());
+                ps2.setInt(4, user.getId());
+                int l2 = ps2.executeUpdate();
+
+                if (l2 > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (ps1 != null) ps1.close();
+                if (ps2 != null) ps2.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return false;
+    }
+
+    public List<Professeur> getProfesseurByIdMod(int id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Professeur>ls = null;
+        Professeur pf = null;
+        String Sql ="SELECT p.iduser,p.nom, p.prenom, p.specialite\n" +
+                    "FROM  professeurs p\n" +
+                    "JOIN assigner a ON a.iduser = p.iduser\n" +
+                    "WHERE a.idmodule = ?";
+
+        try{
+            ls = new ArrayList<>();
+            ps = co.prepareStatement(Sql);
+            ps.setInt(1,id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                pf = new Professeur(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                ls.add(pf);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return ls;
+    }
+
 
 
 

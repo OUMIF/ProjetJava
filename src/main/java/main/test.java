@@ -1,7 +1,9 @@
 package main;
 
 import dao.ModuleImp;
+import dao.ProfesseurImp;
 import model.Module;
+import model.Professeur;
 import model.User;
 
 import java.util.List;
@@ -9,24 +11,13 @@ import java.util.List;
 public class test {
 
     public static void main(String[] args) {
-        // Créer une instance de ModuleImp
-        ModuleImp moduleImp = new ModuleImp();
-        User u =   new User(1,"mehdi@gmail.com","lkjalkjdmaj",3);
 
-        // Créer un nouvel objet Module
-        Module nouveauModule = new Module();
-        nouveauModule.setNomModule("Programmation Java");
-        nouveauModule.setCodeModule("M336");
+        ProfesseurImp pfi = new ProfesseurImp();
+        User pu = new User(null,"ali@gmail.com",null,null);
+        Professeur p = new Professeur(null,"Ali","Midar","Technique");
+        if(pfi.AjouterProf(p,pu)){
+            System.out.println("Ajouter prof avec succes!");
+        }
 
-        // Appeler la méthode AjouterModule pour insérer le module
-        //boolean isAdded = moduleImp.AjouterModule(nouveauModule,u);
-        boolean iki = moduleImp.deleteModule(16);
-
-        // Afficher le résultat
-//        if (isAdded) {
-//            System.out.println("Le module a été ajouté avec succès.");
-//        } else {
-//            System.out.println("L'ajout du module a échoué.");
-//        }
     }
 }

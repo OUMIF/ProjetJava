@@ -11,6 +11,8 @@ import util.DatabaseConnection;
 
 public class UserImp {
 
+
+    private  Connection conn = DatabaseConnection.getInstance().getConnection();
     public User getUserById(int id) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
         User us = null;
@@ -29,6 +31,25 @@ public class UserImp {
         }
         return null;
 
+    }
+
+    public String getemailUser(int id) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String  sql = "select email from users where iduser = ?";
+
+        try {
+            ps = conn.prepareStatement( sql);
+            ps.setInt(1,id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+
+        }catch (SQLException e) {
+            System.out.println("Une erreur est survenue" + e.getMessage());
+        }
+        return  null;
     }
 
 
