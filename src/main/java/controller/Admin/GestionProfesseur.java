@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import model.Module;
 import model.Professeur;
 import model.User;
@@ -62,21 +63,48 @@ public class GestionProfesseur {
 
         emailColumn.setCellValueFactory(param -> {
             Professeur prof = param.getValue();
-            User user = userImp.getUserById(prof.getId());
-            String email = (user != null) ? user.getEmail() : "Email non disponible";
-            return new SimpleStringProperty(email);
+            System.out.println("ID du professeur: " + prof.getId()); // Vérifiez ici que l'ID du professeur est valide
+            String email = userImp.getemailUser(prof.getId());
+            if (email == null) {
+                System.out.println("Email non trouvé pour le professeur avec ID: " + prof.getId());
+            } else {
+                System.out.println("Email du professeur: " + email);
+            }
+            return new SimpleStringProperty(email != null ? email : "Email non disponible");
         });
+
+
 
         loadModules();
         loadProfesseurs();  // Charger les professeurs par défaut
     }
 
 
+    @FXML
     private void loadModules() {
         ModuleImp moduleImp = new ModuleImp();
         List<Module> modules = moduleImp.getAll();
-        moduleComboBox.setItems(FXCollections.observableArrayList(modules));
+
+        if (modules != null) {
+            moduleComboBox.setItems(FXCollections.observableArrayList(modules));
+            moduleComboBox.setConverter(new StringConverter<>() {
+                @Override
+                public String toString(Module module) {
+                    return module != null ? module.getNomModule() : ""; // Afficher le nom du module
+                }
+
+                @Override
+                public Module fromString(String string) {
+                    return moduleComboBox.getItems()
+                            .stream()
+                            .filter(module -> module.getNomModule().equals(string))
+                            .findFirst()
+                            .orElse(null);
+                }
+            });
+        }
     }
+
 
     private void loadProfesseurs() {
         Module selectedModule = moduleComboBox.getSelectionModel().getSelectedItem();

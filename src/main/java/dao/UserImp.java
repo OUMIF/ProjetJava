@@ -13,12 +13,14 @@ public class UserImp {
 
 
     private  Connection conn = DatabaseConnection.getInstance().getConnection();
+
+
     public User getUserById(int id) {
         Connection conn = DatabaseConnection.getInstance().getConnection();
         User us = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "select * from users where id = ?";
+        String sql = "select * from users where iduser = ?";
         try {
             ps = conn.prepareStatement(sql, 1);
             rs = ps.executeQuery();
@@ -36,21 +38,31 @@ public class UserImp {
     public String getemailUser(int id) {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String  sql = "select email from users where iduser = ?";
+        String sql = "SELECT email FROM users WHERE iduser = ?";
 
         try {
-            ps = conn.prepareStatement( sql);
-            ps.setInt(1,id);
+            System.out.println("Exécution de la requête pour l'ID: " + id); // Vérifiez que l'ID est bien passé
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id); // Le paramètre est bien passé ici
             rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getString(1);
-            }
 
-        }catch (SQLException e) {
-            System.out.println("Une erreur est survenue" + e.getMessage());
+            if (rs.next()) {
+                return rs.getString("email"); // Utilisez le nom de la colonne
+            }
+        } catch (SQLException e) {
+            System.out.println("Une erreur est survenue: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                System.out.println("Erreur lors de la fermeture des ressources: " + e.getMessage());
+            }
         }
-        return  null;
+        return null; // Aucun utilisateur trouvé
     }
+
+
 
 
 }
