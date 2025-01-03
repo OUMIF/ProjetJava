@@ -111,7 +111,7 @@ public class ajouterModule {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             BorderPane root = loader.load();
-            Stage stage = (Stage) addModule.getScene().getWindow();  // Use any valid button's scene
+            Stage stage = (Stage) addModule.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

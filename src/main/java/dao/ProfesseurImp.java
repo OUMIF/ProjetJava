@@ -2,16 +2,16 @@ package dao;
 
 import model.Etudiant;
 import model.Module;
+import model.Professeur;
 import model.User;
 import util.DatabaseConnection;
 import util.Session;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.security.SecureRandom;
 import java.util.Optional;
 
 public class ProfesseurImp {
@@ -144,6 +144,7 @@ public class ProfesseurImp {
         }
         return moduleCount;
     }
+
     public int getNombreEtudiants(int professeurId) {
         int studentCount = 0;
         PreparedStatement ps = null;
@@ -173,6 +174,58 @@ public class ProfesseurImp {
             }
         }
         return studentCount;
+    }
+
+    public boolean AjouterProf(Professeur pf , User user) {
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
+        String Pass =  generateRandomPassword();
+        String Sql = "Insert Into users(email,password,role) VALUES (?,?,3)";
+        String Sql2 = "INSERT INTO professeurs(iduser,nom,prenom,specialite) VALUES (?,?,?,?)";
+
+        try{
+            ps1 = co.prepareStatement(Sql, Statement.RETURN_GENERATED_KEYS);
+            ps1.setString(1,user.getEmail());
+            ps1.setString(2,Pass);
+            int l = ps1.executeUpdate();
+                if (l> 0 ){
+                    ResultSet rs = ps1.getGeneratedKeys();
+                    if (rs.next()){
+                        int id = rs.getInt(1);
+
+                    ps2 = co.prepareStatement(Sql2);
+                    ps2.setInt(1,id);
+                    ps2.setString(2,pf.getNom());
+                    ps2.setString(3,pf.getPrenom());
+                    ps2.setString(4,pf.getSpecialite());
+                    int l2 = ps2.executeUpdate();
+                        if (l2 > 0) {
+                            return true;  // Si l'insertion du professeur réussit
+                        }
+                    }
+                }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (ps1 != null) ps1.close();
+                if (ps2 != null) ps2.close();
+            } catch (SQLException e) {
+               System.out.println(e.getMessage());
+            }
+        }
+        return false;
+    }
+
+    private String generateRandomPassword() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=<>?";
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < 12; i++) {  // Longueur du mot de passe temporaire
+            int index = random.nextInt(characters.length());
+            password.append(characters.charAt(index));
+        }
+        return password.toString();
     }
 
 
