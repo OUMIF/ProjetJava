@@ -63,20 +63,15 @@ public class GestionProfesseur {
 
         emailColumn.setCellValueFactory(param -> {
             Professeur prof = param.getValue();
-            System.out.println("ID du professeur: " + prof.getId()); // Vérifiez ici que l'ID du professeur est valide
             String email = userImp.getemailUser(prof.getId());
             if (email == null) {
                 System.out.println("Email non trouvé pour le professeur avec ID: " + prof.getId());
-            } else {
-                System.out.println("Email du professeur: " + email);
             }
             return new SimpleStringProperty(email != null ? email : "Email non disponible");
         });
 
-
-
         loadModules();
-        loadProfesseurs();  // Charger les professeurs par défaut
+        loadProfesseurs();
     }
 
 
@@ -90,7 +85,7 @@ public class GestionProfesseur {
             moduleComboBox.setConverter(new StringConverter<>() {
                 @Override
                 public String toString(Module module) {
-                    return module != null ? module.getNomModule() : ""; // Afficher le nom du module
+                    return module != null ? module.getNomModule() : "";
                 }
 
                 @Override
@@ -109,7 +104,7 @@ public class GestionProfesseur {
     private void loadProfesseurs() {
         Module selectedModule = moduleComboBox.getSelectionModel().getSelectedItem();
         if (selectedModule != null) {
-            Integer idmodule = selectedModule.getId(); // Utiliser l'ID du module sélectionné
+            Integer idmodule = selectedModule.getId();
             List<Professeur> professeurs = professeurImp.getProfesseurByIdMod(idmodule);
             if (professeurs != null) {
                 professeursList.setAll(professeurs);
@@ -147,7 +142,7 @@ public class GestionProfesseur {
 
     @FXML
     public void onAddButtonClick() {
-     System.out.println("button clicked ");
+        loadScene("/vues/ADMIN/GestionProfesseurs/AjoutProfesseur.fxml");
     }
 
     @FXML
@@ -159,17 +154,17 @@ public class GestionProfesseur {
     private void showWarning(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
-        alert.setHeaderText(null);  // Pas de texte dans l'en-tête
-        alert.setContentText(message);  // Le message d'avertissement
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 
-    // Méthode pour afficher un message d'information
+
     private void showInfo(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
-        alert.setHeaderText(null);  // Pas de texte dans l'en-tête
-        alert.setContentText(message);  // Le message d'information
+        alert.setHeaderText(null);
+        alert.setContentText(message);
         alert.showAndWait();
     }
 
@@ -222,6 +217,7 @@ public class GestionProfesseur {
             e.printStackTrace();
         }
     }
+
 
 
 }

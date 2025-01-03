@@ -176,6 +176,7 @@ public class GestionModule {
     }
     @FXML
     public void onAjouteEtudiant(ActionEvent actionEvent) {
+
         loadScene("/vues/ADMIN/GestionModule/Adminmodule.fxml");
     }
 
@@ -197,7 +198,7 @@ public class GestionModule {
     }
     @FXML
     private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/GestionModule/Adminmodule.fxml");
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
 
 

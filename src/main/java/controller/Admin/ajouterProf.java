@@ -36,6 +36,12 @@ public class ajouterProf {
     private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
+    @FXML
+    public void onSubmitForm() {
+        // Votre logique ici
+        System.out.println("Formulaire soumis !");
+    }
+
 
     @FXML
     private void onDesconnected(ActionEvent event) {
