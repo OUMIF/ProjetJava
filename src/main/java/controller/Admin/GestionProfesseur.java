@@ -175,7 +175,7 @@ public class GestionProfesseur {
     }
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
@@ -203,7 +203,7 @@ public class GestionProfesseur {
     }
     @FXML
     private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/GestionModule/Adminmodule.fxml");
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
     private void loadScene(String fxmlPath) {
         try {

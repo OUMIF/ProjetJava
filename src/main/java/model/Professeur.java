@@ -14,6 +14,7 @@ public class Professeur {
         Nom = nom;
         this.specialite = specialite;
     }
+    public Professeur() {}
 
     public Integer getId() {
         return id;

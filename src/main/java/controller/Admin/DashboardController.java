@@ -25,7 +25,7 @@ public class DashboardController {
     }
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {

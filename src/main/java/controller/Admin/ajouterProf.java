@@ -1,5 +1,8 @@
 package controller.Admin;
+import javafx.scene.control.TextField;
 
+import dao.ProfesseurImp;
+import dao.UserImp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -8,9 +11,34 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import model.Professeur;
+import model.User;
+
+import java.awt.*;
 import java.io.IOException;
 
 public class ajouterProf {
+
+
+
+
+    @FXML
+    private TextField prenomField;
+
+    @FXML
+    private TextField nomField;
+
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private TextField specialiteField;
+
+    ProfesseurImp prof = new ProfesseurImp();
+    UserImp user = new UserImp();
+    private Professeur pf = new Professeur();
+    private User us = new User();
+
 
     @FXML
     private void onStatistiqueButtonClick() {
@@ -38,8 +66,16 @@ public class ajouterProf {
     }
     @FXML
     public void onSubmitForm() {
-        // Votre logique ici
-        System.out.println("Formulaire soumis !");
+       String prenom = prenomField.getText();
+       String nom = nomField.getText();
+       String email = emailField.getText();
+       String specialite = specialiteField.getText();
+       pf.setId(null);
+       pf.setPrenom(prenom);
+       pf.setNom(nom);
+       pf.setSpecialite(specialite);
+       us.setEmail(email);
+       prof.AjouterProf(pf, us);
     }
 
 

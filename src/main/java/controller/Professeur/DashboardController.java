@@ -31,6 +31,12 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml", actionEvent);
+    }
+
+
 
     @FXML
     private void onCoursesButtonClick() {
@@ -82,4 +88,27 @@ public class DashboardController {
         // Logique pour déconnexion
         System.out.println("Logout button clicked");
     }
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml", actionEvent);
+    }
+
+
+    private void loadScene(String fxmlPath, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.err.println("Erreur lors du chargement de la vue : " + fxmlPath);
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }
