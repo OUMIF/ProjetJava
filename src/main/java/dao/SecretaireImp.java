@@ -80,20 +80,20 @@ public class SecretaireImp {
     }
 
     public boolean deleteSecretaire(int userId) throws SQLException {
-        String deleteUserQuery = "DELETE FROM users WHERE iduser = ? AND role = 2"; // Ensure the role is 2 (secrétaire)
         String deleteSecretaireQuery = "DELETE FROM secretaire WHERE iduser = ?";
+        String deleteUserQuery = "DELETE FROM users WHERE iduser = ? AND role = 2"; // Ensure the role is 2 (secrétaire)
 
-        try (PreparedStatement pstmtUser = connection.prepareStatement(deleteUserQuery);
-             PreparedStatement pstmtSecretaire = connection.prepareStatement(deleteSecretaireQuery)) {
+        try (PreparedStatement pstmtSecretaire = connection.prepareStatement(deleteSecretaireQuery);
+             PreparedStatement pstmtUser = connection.prepareStatement(deleteUserQuery)) {
 
-            // First, delete from the 'users' table
-            pstmtUser.setInt(1, userId);
-            int affectedRows = pstmtUser.executeUpdate();
+            // First, delete from the 'secretaire' table
+            pstmtSecretaire.setInt(1, userId);
+            int affectedRows = pstmtSecretaire.executeUpdate();
 
             if (affectedRows > 0) {
-                // Then, delete from the 'secretaire' table
-                pstmtSecretaire.setInt(1, userId);
-                pstmtSecretaire.executeUpdate();
+                // Then, delete from the 'users' table
+                pstmtUser.setInt(1, userId);
+                pstmtUser.executeUpdate();
                 return true;  // Return true if both deletions were successful
             }
         } catch (SQLException e) {
@@ -101,8 +101,8 @@ public class SecretaireImp {
             throw new SQLException("Error deleting secretary", e);
         }
 
-        return false;  // Return false if deletion fails
-    }
+        return false;
+}
     public boolean updateSecretaire(User secretaire) throws SQLException {
         String query = "UPDATE users SET email = ?, password = ? WHERE iduser = ?";
 
