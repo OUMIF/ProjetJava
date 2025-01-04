@@ -29,7 +29,7 @@ public class DashboardController {
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
     }
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
@@ -66,6 +66,5 @@ public class DashboardController {
             e.printStackTrace();
         }
     }
-
 
 }

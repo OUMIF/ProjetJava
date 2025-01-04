@@ -24,8 +24,6 @@ import java.sql.*;
 
 public class ajouterunetudiant {
 
-
-
     @FXML
     private TextField matriculeField, nomField, prenomField, promotionField;
 
@@ -40,6 +38,7 @@ public class ajouterunetudiant {
     private InscriptionImp inscriptionDAO;
     private GererEtudiantIMP gererEtudiantDAO;
 
+    // Initialize method to set up the controller
     public void initialize() {
         try {
             connection = DatabaseConnection.getInstance().getConnection();
@@ -59,6 +58,7 @@ public class ajouterunetudiant {
         }
     }
 
+    // Populate the ComboBox with available modules
     private void populateModules() {
         String sql = "SELECT NomModule FROM Modules";
 
@@ -82,6 +82,7 @@ public class ajouterunetudiant {
         }).start();
     }
 
+    // Submit the form to register the student
     @FXML
     private void onSubmitForm() {
         String matricule = matriculeField.getText();
@@ -127,6 +128,7 @@ public class ajouterunetudiant {
         }
     }
 
+    // Validate the fields of the form
     private boolean validateFields(String matricule, String nom, String prenom, String promotion, String dateNaissance, String selectedModule) {
         if (matricule.isEmpty() || nom.isEmpty() || prenom.isEmpty() || promotion.isEmpty() || dateNaissance == null || selectedModule == null) {
             showAlert(Alert.AlertType.WARNING, "Validation Error", "All fields must be filled.");
@@ -135,6 +137,7 @@ public class ajouterunetudiant {
         return true;
     }
 
+    // Rollback the transaction in case of an error
     private void rollbackTransaction() {
         try {
             if (connection != null) {
@@ -145,11 +148,13 @@ public class ajouterunetudiant {
         }
     }
 
+    // Handle exceptions by showing alerts
     private void handleException(Exception e, String message) {
         e.printStackTrace();
         showAlert(Alert.AlertType.ERROR, "Error", message);
     }
 
+    // Show an alert message
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -158,27 +163,34 @@ public class ajouterunetudiant {
         alert.showAndWait();
     }
 
+    // Handle the "Statistique" button click event
     @FXML
     private void onStatistiqueButtonClick() {
         loadScene("/vues/ADMIN/AdminPageInit.fxml");
     }
+
+    // Handle "Gestion des Professeurs" button click event
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
         System.out.println("button clicked");
     }
+
+    // Handle "Gestion des Secrétaires" button click event
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
         System.out.println("button clicked");
     }
+
+    // Handle "Gestion des Étudiants" button click event
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/etudiantmanagment.fxml");
-
     }
+
+    // Handle user logout
     @FXML
     private void onDesconnected(ActionEvent event) {
         try {
-            // Assuming you're trying to load the login screen after logout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -188,9 +200,9 @@ public class ajouterunetudiant {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    // Load a new scene
     private void loadScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
