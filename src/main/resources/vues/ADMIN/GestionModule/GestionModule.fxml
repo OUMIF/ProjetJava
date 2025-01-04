@@ -52,25 +52,18 @@
                 </HBox>
             </VBox>
 
-            <!-- Form for Modify Action (Foreground) -->
-            <VBox fx:id="formContainer" alignment="CENTER" spacing="20" style="-fx-background-color: white; -fx-border-radius: 12px; -fx-padding: 30; -fx-pref-width: 400px; -fx-pref-height: 350px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5); visibility: hidden;">
-                <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 5;">
-                    <Label text="ID:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;"/>
-                    <TextField fx:id="IdModule" style="-fx-border-radius: 5px; -fx-padding: 5; -fx-pref-width: 200px;"/>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 5;">
-                    <Label text="Nom Module:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;"/>
-                    <TextField fx:id="nomField" style="-fx-border-radius: 5px; -fx-padding: 5; -fx-pref-width: 200px;"/>
-                </HBox>
-                <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 5;">
-                    <Label text="Code Module:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;"/>
-                    <TextField fx:id="CodeM" style="-fx-border-radius: 5px; -fx-padding: 5; -fx-pref-width: 200px;"/>
-                </HBox>
-                <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10;">
-                    <Button fx:id="saveButton" text="Save" onAction="#onSaveButtonClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 10px 20px;"/>
-                    <Button fx:id="cancelButton" text="Cancel" onAction="#onCancelButtonClick" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 10px 20px;"/>
+            <VBox fx:id="formContainer" spacing="10" visible="false">
+                <Label text="Modifier Professeur" />
+                <TextField fx:id="IdProfesseur" promptText="ID (non modifiable)" editable="false" />
+                <TextField fx:id="nomField" promptText="Nom" />
+                <TextField fx:id="prenomField" promptText="Prénom" />
+                <TextField fx:id="specialiteField" promptText="Spécialité" />
+                <HBox spacing="10">
+                    <Button text="Enregistrer" onAction="#onSaveButtonClick" />
+                    <Button text="Annuler" onAction="#onCancelButtonClick" />
                 </HBox>
             </VBox>
+
         </StackPane>
     </center>
 </BorderPane>

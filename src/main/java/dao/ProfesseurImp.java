@@ -232,16 +232,16 @@ public class ProfesseurImp {
     public boolean UpdateProf(Professeur pf, User user) {
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
-        String Sql1 = "UPDATE users SET email = ? WHERE id = ?";
+        String Sql1 = "UPDATE users SET email = ? WHERE iduser = ?";
         String Sql2 = "UPDATE professeurs SET nom = ?, prenom = ?, specialite = ? WHERE iduser = ?";
 
         try {
+            co.setAutoCommit(false);
 
             ps1 = co.prepareStatement(Sql1);
             ps1.setString(1, user.getEmail());
             ps1.setInt(2, user.getId());
             int l1 = ps1.executeUpdate();
-
 
             if (l1 > 0) {
                 ps2 = co.prepareStatement(Sql2);
@@ -252,21 +252,33 @@ public class ProfesseurImp {
                 int l2 = ps2.executeUpdate();
 
                 if (l2 > 0) {
+                    co.commit();
                     return true;
                 }
             }
+            co.rollback();
+
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Erreur lors de la mise à jour : " + e.getMessage());
+            try {
+                if (co != null) {
+                    co.rollback();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Erreur lors du rollback : " + ex.getMessage());
+            }
         } finally {
             try {
                 if (ps1 != null) ps1.close();
                 if (ps2 != null) ps2.close();
+                co.setAutoCommit(true);  // Restaurer le comportement par défaut
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Erreur lors de la fermeture des ressources : " + e.getMessage());
             }
         }
         return false;
     }
+
 
     public List<Professeur> getProfesseurByIdMod(int id) {
         PreparedStatement ps = null;
@@ -291,6 +303,46 @@ public class ProfesseurImp {
             System.out.println(e.getMessage());
         }
         return ls;
+    }
+
+    public boolean deleteProf(Professeur pf) {
+        int id = pf.getId();
+        PreparedStatement ps = null;
+        PreparedStatement ps2 = null;
+        PreparedStatement ps3 = null;
+        String sql = "DELETE FROM assigner WHERE iduser = ?";
+        String sql2 = "DELETE FROM professeurs WHERE iduser = ?";
+        String sql3 = "DELETE FROM users WHERE iduser = ?";
+
+        try{
+            ps = co.prepareStatement(sql);
+            ps.setInt(1,id);
+            int l = ps.executeUpdate();
+            if (l > 0) {
+                ps2 = co.prepareStatement(sql2);
+                ps.setInt(1,id);
+                int l2 = ps.executeUpdate();
+                if (l2 > 0) {
+                    ps3 = co.prepareStatement(sql3);
+                    ps.setInt(1,id);
+                    int l3 = ps3.executeUpdate();
+                    if (l3 > 0) {
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }  finally {
+            try {
+                if (ps != null) ps.close();
+                if (ps2 != null) ps2.close();
+                if (ps3 != null) ps3.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return false;
     }
 
 

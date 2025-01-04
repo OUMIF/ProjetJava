@@ -94,9 +94,9 @@ public class GestionModule {
         Module selectedmodule = ModuleTable.getSelectionModel().getSelectedItem();
         if (selectedmodule != null) {
             moduleImp.deleteModule(selectedmodule.getId());
-            showInfo("Student Deleted", "The student has been successfully deleted.");
+            showInfo("Professeur supprimer", "Le professeur a etait supprimer avec succes.");
         } else {
-            showWarning("No Selection", "Please select a student to delete.");
+            showWarning("Il y'a aucune selection", "Veuillez selectionner un professeur.");
         }
 
         loadModules();

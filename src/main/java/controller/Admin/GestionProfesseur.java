@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Module;
@@ -25,6 +26,17 @@ import java.io.IOException;
 import java.util.List;
 
 public class GestionProfesseur {
+
+
+    @FXML
+    private TextField nomField;
+    @FXML
+    private TextField prenomField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField speField;
+
 
     @FXML
     private TableView<Professeur> professeursTable;
@@ -46,6 +58,9 @@ public class GestionProfesseur {
 
     @FXML
     private TextField searchField;
+
+    @FXML
+    private VBox formContainer;
 
     @FXML
     private ComboBox<Module> moduleComboBox;
@@ -126,14 +141,18 @@ public class GestionProfesseur {
         loadProfesseurs();
     }   @FXML
     private void onDeleteButtonClick() {
+        Professeur selectedProf = professeursTable.getSelectionModel().getSelectedItem();
+        if(selectedProf != null) {
+            professeurImp.deleteProf(selectedProf);
+            showInfo("Student Deleted", "The student has been successfully deleted.");
+        } else {
+            showWarning("No Selection", "Please select a student to delete.");
+        }
         loadProfesseurs();
     }   @FXML
     private void onModuleSelected() {
         loadProfesseurs();
     }
-
-
-
 
     @FXML
     public void onSearchButtonClick() {
@@ -146,9 +165,20 @@ public class GestionProfesseur {
     }
 
     @FXML
-    public void onEditButtonClick() {
-         System.out.println("button clicked ");
+    private void onEditButtonClick() {
+        Professeur selectedProf = professeursTable.getSelectionModel().getSelectedItem();
+        if (selectedProf != null) {
+            formContainer.setVisible(true);
+            nomField.setText(selectedProf.getNom());
+            prenomField.setText(selectedProf.getPrenom());
+            emailField.setText(userImp.getemailUser(selectedProf.getId()));
+            speField.setText(selectedProf.getSpecialite());
+
+        } else {
+            showAlert("Erreur", "Veuillez sélectionner un professeur à modifier.", Alert.AlertType.WARNING);
+        }
     }
+
 
 
     private void showWarning(String title, String message) {
@@ -218,8 +248,64 @@ public class GestionProfesseur {
         }
     }
 
+    @FXML
+    private void onSaveButtonClick() {
+        Professeur selectedProfesseur = professeursTable.getSelectionModel().getSelectedItem();
+        if (selectedProfesseur == null) {
+            showAlert("Erreur", "Aucun professeur sélectionné pour la modification.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        String newNom = nomField.getText().trim();
+        String newPrenom = prenomField.getText().trim();
+        String newEmail = emailField.getText().trim();
+        String newSpecialite = speField.getText().trim();
 
 
+        if (newNom.isEmpty() || newPrenom.isEmpty() || newEmail.isEmpty() || newSpecialite.isEmpty()) {
+            showAlert("Erreur", "Tous les champs sont obligatoires.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Professeur updatedProf = new Professeur();
+        updatedProf.setId(selectedProfesseur.getId());
+        updatedProf.setNom(newNom);
+        updatedProf.setPrenom(newPrenom);
+        updatedProf.setSpecialite(newSpecialite);
+
+        User updatedUser = new User();
+        updatedUser.setId(selectedProfesseur.getId());
+        updatedUser.setEmail(newEmail);
+
+        boolean isUpdated = professeurImp.UpdateProf(updatedProf, updatedUser);
+        if (!isUpdated) {
+            showAlert("Erreur", "Échec de la mise à jour des informations.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        loadProfesseurs();
+
+        showAlert("Succès", "Les informations du professeur ont été mises à jour.", Alert.AlertType.INFORMATION);
+        onCancelButtonClick();
+    }
+
+    @FXML
+    private void onCancelButtonClick() {
+        // Réinitialiser les champs du formulaire
+        nomField.clear();
+        prenomField.clear();
+        emailField.clear();
+        speField.clear();
+
+        // Cacher le formulaire
+        formContainer.setVisible(false);
+    }
+    private void showAlert(String title, String content, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 }
 
 

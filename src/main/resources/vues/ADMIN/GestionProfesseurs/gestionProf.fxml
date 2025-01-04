@@ -31,22 +31,46 @@
 
     <!-- Content Area -->
     <center>
-        <VBox alignment="CENTER" prefHeight="547.0" prefWidth="570.0" spacing="20.0" style="-fx-background-color: #F4F6F9; -fx-padding: 20;">
+        <VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #F4F6F9; -fx-padding: 20;">
+            <!-- Title -->
             <Label fx:id="welcomeText" style="-fx-font-size: 20px;" text="Sélectionnez un module ou recherchez directement un professeur" />
 
             <!-- Module Selection -->
             <ComboBox fx:id="moduleComboBox" onAction="#onModuleSelected" prefWidth="300.0" />
 
             <!-- TableView -->
-            <TableView fx:id="professeursTable" prefHeight="400" prefWidth="600">
+            <TableView fx:id="professeursTable" minHeight="300.0" minWidth="600.0" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="idColumn" text="ID" />
-                    <TableColumn fx:id="nameColumn" text="Nom" />
-                    <TableColumn fx:id="PrenomColumn" text="Prénom" />
-                    <TableColumn fx:id="emailColumn" text="Email" />
-                    <TableColumn fx:id="spColumn" text="Spécialité" />
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="50.0" />
+                    <TableColumn fx:id="nameColumn" text="Nom" prefWidth="150.0" />
+                    <TableColumn fx:id="PrenomColumn" text="Prénom" prefWidth="150.0" />
+                    <TableColumn fx:id="emailColumn" text="Email" prefWidth="200.0" />
+                    <TableColumn fx:id="spColumn" text="Spécialité" prefWidth="150.0" />
                 </columns>
             </TableView>
+
+            <VBox fx:id="formContainer" alignment="CENTER" spacing="20" style="-fx-background-color: white; -fx-border-radius: 12px; -fx-padding: 30; -fx-pref-width: 400px; -fx-pref-height: 350px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5); visibility: hidden;">
+                <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 5;">
+                    <Label text="Nom:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;"/>
+                    <TextField fx:id="nomField" style="-fx-border-radius: 5px; -fx-padding: 5; -fx-pref-width: 200px;"/>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 5;">
+                    <Label text="Prénom:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;"/>
+                    <TextField fx:id="prenomField" style="-fx-border-radius: 5px; -fx-padding: 5; -fx-pref-width: 200px;"/>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 5;">
+                    <Label text="Email:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;"/>
+                    <TextField fx:id="emailField" style="-fx-border-radius: 5px; -fx-padding: 5; -fx-pref-width: 200px;"/>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-padding: 5;">
+                    <Label text="Spécialité:" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-pref-width: 100px;"/>
+                    <TextField fx:id="speField" style="-fx-border-radius: 5px; -fx-padding: 5; -fx-pref-width: 200px;"/>
+                </HBox>
+                <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10;">
+                    <Button fx:id="saveButton" text="Enregistrer" onAction="#onSaveButtonClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 10px 20px;"/>
+                    <Button fx:id="cancelButton" text="Annuler" onAction="#onCancelButtonClick" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-border-radius: 5px; -fx-padding: 10px 20px;"/>
+                </HBox>
+            </VBox>
 
             <!-- Search Field -->
             <HBox alignment="CENTER" spacing="10">
