@@ -187,15 +187,12 @@ public class ajouterunetudiant {
         loadScene("/vues/ADMIN/etudiantmanagment.fxml");
     }
 
-<<<<<<< HEAD
+
     @FXML
     private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
 
-=======
-    // Handle user logout
->>>>>>> 042e35217516e3c95a8b78f794a86941b341accd
     @FXML
     private void onDesconnected(ActionEvent event) {
         try {
