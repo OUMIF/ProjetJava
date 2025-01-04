@@ -36,4 +36,8 @@ public class Module {
     public void setCodeModule(String codeModule) {
         CodeModule = codeModule;
     }
+    @Override
+    public String toString() {
+        return NomModule;
+    }
 }

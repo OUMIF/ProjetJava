@@ -138,18 +138,56 @@ public class GestionProfesseur {
     }
     @FXML
     private void onAjouterModuleButtonClick() {
+            showModuleSelectionDialog();
+        }
+
+    private void showModuleSelectionDialog() {
+        ModuleImp moduleImp = new ModuleImp();
+        List<Module> modules = moduleImp.getAll();
+
+        // Création du ChoiceDialog avec les modules
+        ChoiceDialog<Module> dialog = new ChoiceDialog<>();
+        dialog.setTitle("Sélectionner un module");
+        dialog.setHeaderText("Choisissez un module à assigner");
+        dialog.getItems().setAll(modules);
+
+        // Utilise toString() pour afficher le nom du module dans la liste
+        dialog.setContentText("Sélectionner un module");
+
+        // Affichage du choix du module et assignation si un module est sélectionné
+        dialog.showAndWait().ifPresent(selectedModule -> {
+            assignModuleToProfesseur(selectedModule);
+        });
+    }
+
+
+
+
+    private void assignModuleToProfesseur(Module selectedModule) {
+        Professeur selectedProfesseur = professeursTable.getSelectionModel().getSelectedItem();
+        if (selectedProfesseur == null) {
+            showAlert("Erreur", "Aucun professeur sélectionné.", Alert.AlertType.WARNING);
+            return;
+        }
+        professeurImp.AssignerMod(selectedProfesseur.getId(), selectedModule.getId());
         loadProfesseurs();
-    }   @FXML
+        showAlert("Succès", "Le module a été assigné au professeur.", Alert.AlertType.INFORMATION);
+    }
+
+
+    @FXML
     private void onDeleteButtonClick() {
         Professeur selectedProf = professeursTable.getSelectionModel().getSelectedItem();
         if(selectedProf != null) {
             professeurImp.deleteProf(selectedProf);
-            showInfo("Student Deleted", "The student has been successfully deleted.");
+            showInfo("Professeur supprimé", "Le professeur a été supprimé avec succès.");
         } else {
-            showWarning("No Selection", "Please select a student to delete.");
+            showWarning("Aucune sélection", "Veuillez sélectionner un professeur à supprimer.");
         }
+
         loadProfesseurs();
-    }   @FXML
+    }
+    @FXML
     private void onModuleSelected() {
         loadProfesseurs();
     }

@@ -180,43 +180,55 @@ public class ProfesseurImp {
     public boolean AjouterProf(Professeur pf , User user) {
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
+        PreparedStatement ps3 = null;
         String Pass =  generateRandomPassword();
         String Sql = "Insert Into users(email,password,role) VALUES (?,?,3)";
         String Sql2 = "INSERT INTO professeurs(iduser,nom,prenom,specialite) VALUES (?,?,?,?)";
+        String Sql3 = "Insert INTO assigner(iduser, idmodule, dateassignation) VALUES (?,?,?)";
 
         try{
             ps1 = co.prepareStatement(Sql, Statement.RETURN_GENERATED_KEYS);
-            ps1.setString(1,user.getEmail());
-            ps1.setString(2,Pass);
+            ps1.setString(1, user.getEmail());
+            ps1.setString(2, Pass);
             int l = ps1.executeUpdate();
-                if (l> 0 ){
-                    ResultSet rs = ps1.getGeneratedKeys();
-                    if (rs.next()){
-                        int id = rs.getInt(1);
+            if (l > 0) {
+                ResultSet rs = ps1.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
 
+                    // Insertion du professeur
                     ps2 = co.prepareStatement(Sql2);
-                    ps2.setInt(1,id);
-                    ps2.setString(2,pf.getNom());
-                    ps2.setString(3,pf.getPrenom());
-                    ps2.setString(4,pf.getSpecialite());
+                    ps2.setInt(1, id);
+                    ps2.setString(2, pf.getNom());
+                    ps2.setString(3, pf.getPrenom());
+                    ps2.setString(4, pf.getSpecialite());
                     int l2 = ps2.executeUpdate();
-                        if (l2 > 0) {
+                    if (l2 > 0) {
+                        ps3 = co.prepareStatement(Sql3);
+                        ps3.setInt(1, id);
+                        ps3.setInt(2, 4);
+                        ps3.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
+                        int l3 = ps3.executeUpdate();
+                        if (l3 > 0) {
                             return true;
                         }
                     }
                 }
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
             try {
                 if (ps1 != null) ps1.close();
                 if (ps2 != null) ps2.close();
+                if (ps3 != null) ps3.close();
             } catch (SQLException e) {
-               System.out.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
         return false;
     }
+
 
     private String generateRandomPassword() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=<>?";
@@ -279,7 +291,6 @@ public class ProfesseurImp {
         return false;
     }
 
-
     public List<Professeur> getProfesseurByIdMod(int id) {
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -341,6 +352,25 @@ public class ProfesseurImp {
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
+        }
+        return false;
+    }
+
+    public boolean AssignerMod(Integer idp , Integer idM){
+        PreparedStatement ps = null;
+        String sql = "Insert into assigner Values(?,?,?)";
+        try {
+            ps = co.prepareStatement(sql);
+            ps.setInt(1,idp);
+            ps.setInt(2,idM);
+            ps.setDate(3, java.sql.Date.valueOf(java.time.LocalDate.now()));
+
+            int l = ps.executeUpdate();
+            if (l > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return false;
     }
