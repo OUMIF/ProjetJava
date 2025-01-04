@@ -49,6 +49,7 @@
             <HBox alignment="CENTER" spacing="10">
                 <TextField fx:id="searchField" promptText="Search Student" style="-fx-padding: 10;" />
                 <Button onAction="#onSearchButtonClick" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" />
+                <Button  fx:id="generatePdfButton" onAction="#onGeneratePdfButtonClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Generate PDF" />
             </HBox>
 
         </VBox>

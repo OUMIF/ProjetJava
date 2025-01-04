@@ -1,6 +1,7 @@
 package controller.Professeur;
 import dao.ProfesseurImp;
 import dao.UserImp;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.Etudiant;
@@ -15,10 +17,14 @@ import model.Module;
 import model.User;
 import util.Session;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import controller.Professeur.PdfGenerator;
 
 public class ProfesseurEtud {
+    @FXML
+    private Button generatePdfButton;
 
     @FXML
     private Label welcomeText;
@@ -172,6 +178,26 @@ public class ProfesseurEtud {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    @FXML
+    protected void onGeneratePdfButtonClick(ActionEvent event) {
+        // Get the list of students from the TableView
+        List<Etudiant> students = studentTable.getItems();
+
+        if (students != null && !students.isEmpty()) {
+            // Open a file chooser to select the destination of the PDF
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+            File selectedFile = fileChooser.showSaveDialog(generatePdfButton.getScene().getWindow());
+
+            if (selectedFile != null) {
+                // Call the PDF generator and pass the students list
+                PdfGenerator.generatePdf(students, selectedFile);
+                System.out.println("PDF generated successfully at " + selectedFile.getAbsolutePath());
+            }
+        } else {
+            System.out.println("No students found to generate PDF.");
         }
     }
 
