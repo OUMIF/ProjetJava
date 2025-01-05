@@ -133,9 +133,37 @@ public class GestionProfesseur {
     }
 
     @FXML
-    private void onContactButtonClick() {
-        loadProfesseurs();
+    private void onContactButtonClick(ActionEvent actionEvent) {
+        Professeur selectedProfesseur = professeursTable.getSelectionModel().getSelectedItem();
+        if (selectedProfesseur != null) {
+            try {
+                String emailProf = userImp.getemailUser(selectedProfesseur.getId());
+                if (emailProf == null || emailProf.isEmpty()) {
+                    showAlert("Erreur", "L'email du professeur sélectionné est introuvable.", Alert.AlertType.WARNING);
+                    return;
+                }
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/ADMIN/GestionProfesseurs/EnvoyerMessage.fxml"));
+                Parent root = loader.load();
+
+                EnvoyerMessageController controller = loader.getController();
+                controller.setEmailDestinataire(emailProf);
+
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert("Erreur", "Impossible de charger la scène.", Alert.AlertType.ERROR);
+            }
+        } else {
+            showAlert("Erreur", "Veuillez sélectionner un professeur.", Alert.AlertType.WARNING);
+        }
     }
+
+
+
     @FXML
     private void onAjouterModuleButtonClick() {
             showModuleSelectionDialog();
@@ -247,7 +275,7 @@ public class GestionProfesseur {
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
+        System.out.println("button clicked");
     }
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
