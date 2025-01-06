@@ -2,12 +2,14 @@ package controller.Admin;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import model.User;
 import model.Secraitaires;
 import dao.SecretaireImp;
@@ -144,24 +146,69 @@ public class AjouteSecretaireController {
 
     // Other event handler methods can be kept as they are
     public void onStatistiqueButtonClick(ActionEvent actionEvent) {
+
     }
 
-    public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-    }
-
-    public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-    }
-
-    public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
-    }
 
     public void onGestiondesModuleButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
 
-    public void onDesconnected(ActionEvent actionEvent) {
+
+
+
+    @FXML
+    private void onStatistiqueButtonClick() {
+        loadScene("/vues/ADMIN/AdminPageInit.fxml");
+    }
+    @FXML
+    public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
+    }
+    @FXML
+    public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
+    }
+    @FXML
+    public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/etudiantmanagment.fxml");
+
+    }
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
 
-    public void onEmailFieldChanged(KeyEvent keyEvent) {
+
+
+    @FXML
+    private void onDesconnected(ActionEvent event) {
+        try {
+            // Assuming you're trying to load the login screen after logout
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
+
+    private void loadScene(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            BorderPane root = loader.load();
+            Stage stage = (Stage) welcomeText.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -41,7 +41,7 @@ public class ajouterProf {
 
 
     @FXML
-    private void onStatistiqueButtonClick() {
+    private void onStatistiqueButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/AdminPageInit.fxml");
     }
 
@@ -81,6 +81,7 @@ public class ajouterProf {
     @FXML
     private void onDesconnected(ActionEvent event) {
         try {
+            // Assuming you're trying to load the login screen after logout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -90,6 +91,7 @@ public class ajouterProf {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void loadScene(String fxmlPath) {
@@ -104,4 +106,5 @@ public class ajouterProf {
             e.printStackTrace();
         }
     }
+
 }

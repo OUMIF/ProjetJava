@@ -131,7 +131,7 @@ public class SecretaireController {
 
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/professeurManagement.fxml");
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
     }
 
     @FXML
@@ -141,7 +141,7 @@ public class SecretaireController {
 
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/etudiantManagement.fxml");
+        loadScene("/vues/ADMIN/etudiantmanagment.fxml");
     }
 
     @FXML
@@ -160,8 +160,8 @@ public class SecretaireController {
     }
 
     @FXML
-    public void onGestiondesModuleButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/moduleManagement.fxml");
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
 
     private void loadScene(String fxmlPath) {
@@ -186,6 +186,23 @@ public class SecretaireController {
         alert.showAndWait();
     }
 
-    public void onDesconnected(ActionEvent actionEvent) {
+    @FXML
+    private void onDesconnected(ActionEvent event) {
+        try {
+            // Assuming you're trying to load the login screen after logout
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    @FXML
+    public void onGestiondesModuleButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
 }

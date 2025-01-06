@@ -196,6 +196,7 @@ public class ajouterunetudiant {
     @FXML
     private void onDesconnected(ActionEvent event) {
         try {
+            // Assuming you're trying to load the login screen after logout
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -205,6 +206,7 @@ public class ajouterunetudiant {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     // Load a new scene
@@ -221,4 +223,5 @@ public class ajouterunetudiant {
             showAlert(Alert.AlertType.ERROR, "Loading Error", "Failed to load the scene.");
         }
     }
+
 }
