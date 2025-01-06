@@ -46,7 +46,7 @@ public class EnvoyerMessageController {
     private void envoyerMessage() {
         String message = champMessage.getText();
         String nomDestinataire = champEmailDestinataire.getText();
-        String emailExpediteur = "oumifad49@gmail.com";
+        String emailExpediteur = "oumifad49@gmail.com"; // Email de l'expéditeur
 
         if (message.isEmpty()) {
             showAlert(AlertType.WARNING, "Champ de message vide", "Veuillez entrer un message avant d'envoyer.");
@@ -59,7 +59,6 @@ public class EnvoyerMessageController {
                 // URL de l'API EmailJS
                 URL url = new URL("https://api.emailjs.com/api/v1.0/email/send");
 
-                // Créer la connexion
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
@@ -75,8 +74,8 @@ public class EnvoyerMessageController {
 
                 // Créer le corps de la requête JSON
                 String jsonInputString = String.format(
-                        "{\"service_id\":\"%s\",\"template_id\":\"%s\",\"user_id\":\"%s\",\"template_params\":{\"to_name\":\"%s\",\"from_name\":\"%s\",\"message\":\"%s\"}}",
-                        EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_USER_ID, nomDestinataire, emailExpediteur, messageEscaped
+                        "{\"service_id\":\"%s\",\"template_id\":\"%s\",\"user_id\":\"%s\",\"template_params\":{\"to_email\":\"%s\",\"from_name\":\"%s\",\"from_email\":\"%s\",\"message\":\"%s\"}}",
+                        EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_USER_ID, nomDestinataire, emailExpediteur, emailExpediteur, messageEscaped
                 );
 
                 // Écrire les données dans la requête
@@ -106,7 +105,6 @@ public class EnvoyerMessageController {
             }
         }
     }
-
 
     public void setEmailDestinataire(String email) {
         champEmailDestinataire.setText(email);
