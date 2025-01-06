@@ -73,10 +73,12 @@ public class EtudiantImp {
     public boolean deleteStudentById(int id) throws SQLException {
         String deleteInscrire = "DELETE FROM inscrire WHERE idetudiant = ?";
         String deleteGererEtudiant = "DELETE FROM gereretudiant WHERE idetudiant = ?";
-        String deleteEtudiant = "DELETE FROM Etudiants WHERE idetudiant = ?";
+        String deleteGererEtudiantAdmin = "DELETE FROM gereretudiantadmin WHERE idetudiant = ?";
+        String deleteEtudiant = "DELETE FROM etudiants WHERE idetudiant = ?";
 
         try (PreparedStatement stmtInscrire = connection.prepareStatement(deleteInscrire);
-             PreparedStatement stmtGerer = connection.prepareStatement(deleteGererEtudiant);
+             PreparedStatement stmtGererEtudiant = connection.prepareStatement(deleteGererEtudiant);
+             PreparedStatement stmtGererEtudiantAdmin = connection.prepareStatement(deleteGererEtudiantAdmin);
              PreparedStatement stmtEtudiant = connection.prepareStatement(deleteEtudiant)) {
 
             connection.setAutoCommit(false); // Start transaction
@@ -84,18 +86,31 @@ public class EtudiantImp {
             // Delete from inscrire
             stmtInscrire.setInt(1, id);
             stmtInscrire.executeUpdate();
+            System.out.println("Deleted from inscrire for idetudiant: " + id);
 
             // Delete from gereretudiant
-            stmtGerer.setInt(1, id);
-            stmtGerer.executeUpdate();
+            stmtGererEtudiant.setInt(1, id);
+            stmtGererEtudiant.executeUpdate();
+            System.out.println("Deleted from gereretudiant for idetudiant: " + id);
 
-            // Delete from Etudiants
+            // Delete from gereretudiantadmin
+            stmtGererEtudiantAdmin.setInt(1, id);
+            stmtGererEtudiantAdmin.executeUpdate();
+            System.out.println("Deleted from gereretudiantadmin for idetudiant: " + id);
+
+            // Delete from etudiants
             stmtEtudiant.setInt(1, id);
             boolean result = stmtEtudiant.executeUpdate() > 0;
+            if (result) {
+                System.out.println("Deleted from etudiants for idetudiant: " + id);
+            } else {
+                System.out.println("No record found in etudiants for idetudiant: " + id);
+            }
 
             connection.commit(); // Commit transaction
             return result;
         } catch (SQLException ex) {
+            System.err.println("An error occurred during deletion. Rolling back changes. Error: " + ex.getMessage());
             connection.rollback(); // Rollback on failure
             throw ex;
         } finally {

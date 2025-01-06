@@ -275,7 +275,7 @@ public class GestionProfesseur {
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
     }
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {

@@ -146,6 +146,7 @@ public class AjouteSecretaireController {
     @FXML
     // Other event handler methods can be kept as they are
     public void onStatistiqueButtonClick(ActionEvent actionEvent) {
+<<<<<<< HEAD
         loadScene("/vues/ADMIN/AdminPageInit.fxml");
     }
     @FXML
@@ -181,10 +182,62 @@ public class AjouteSecretaireController {
     }
 
 
-
-    public void onEmailFieldChanged(KeyEvent keyEvent) {
+=======
 
     }
+
+
+    public void onGestiondesModuleButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
+    }
+
+>>>>>>> 07ce70041a5dbfe3fa7f99510a868ebe398ef688
+
+
+
+    @FXML
+    private void onStatistiqueButtonClick() {
+        loadScene("/vues/ADMIN/AdminPageInit.fxml");
+    }
+    @FXML
+    public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
+    }
+    @FXML
+    public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
+    }
+    @FXML
+    public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/etudiantmanagment.fxml");
+
+    }
+<<<<<<< HEAD
+=======
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
+    }
+
+
+
+    @FXML
+    private void onDesconnected(ActionEvent event) {
+        try {
+            // Assuming you're trying to load the login screen after logout
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+>>>>>>> 07ce70041a5dbfe3fa7f99510a868ebe398ef688
     private void loadScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -197,4 +250,9 @@ public class AjouteSecretaireController {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 07ce70041a5dbfe3fa7f99510a868ebe398ef688
 }
