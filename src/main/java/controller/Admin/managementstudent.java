@@ -189,11 +189,11 @@ public class managementstudent {
     }
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        loadScene("/vues/ADMIN/GestionModule/GestionModule");
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked");
+        loadScene("/vues/ADMIN/gestiondessecretaire");
     }
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {

@@ -131,7 +131,7 @@ public class SecretaireController {
 
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/professeurManagement.fxml");
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
     }
 
     @FXML
