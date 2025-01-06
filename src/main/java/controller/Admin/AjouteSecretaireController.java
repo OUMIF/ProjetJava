@@ -211,4 +211,6 @@ public class AjouteSecretaireController {
     }
 
 
+    public void onEmailFieldChanged(KeyEvent keyEvent) {
+    }
 }
