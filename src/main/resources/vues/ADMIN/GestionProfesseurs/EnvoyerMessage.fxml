@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.Admin.EnvoyerMessageController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.Admin.EnvoyerMessageController" stylesheets="@dashboard.css">
     <!-- Header Section -->
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="117.0" prefWidth="856.0" spacing="10.0"

@@ -8,11 +8,11 @@
 <BorderPane xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.Admin.DashboardController"
-            stylesheets="@styles.css">
+            stylesheets="@dashboard.css">
 
     <!-- Header Section -->
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #2E3B4E; -fx-padding: 10;">
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #2E3B4E; -fx-padding: 10;" >
             <ImageView fitHeight="87.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@logoensa.jpeg"/>
