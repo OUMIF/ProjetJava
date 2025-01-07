@@ -1,0 +1,82 @@
+/* styles.css */
+
+/* Styles généraux */
+.root {
+    -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.header {
+    -fx-background-color: #2E3B4E;
+    -fx-padding: 10;
+}
+
+.header-image {
+    -fx-fit-height: 87px;
+    -fx-fit-width: 300px;
+}
+
+.header-label {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #1D2A3B;
+    -fx-padding: 20;
+}
+
+.sidebar-button {
+    -fx-background-color: #3A4B63;
+    -fx-text-fill: white;
+    -fx-pref-height: 35px;
+    -fx-pref-width: 184px;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #4A5B73;
+}
+
+/* Content Area */
+.content {
+    -fx-background-color: #F4F6F9;
+    -fx-padding: 40;
+}
+
+.content-label-title {
+    -fx-font-size: 24px;
+    -fx-text-fill: #2E3B4E;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-alignment: center;
+    -fx-spacing: 10;
+}
+
+.card-icon {
+    -fx-fit-height: 50px;
+    -fx-fit-width: 50px;
+}
+
+.card-title {
+    -fx-font-size: 18px;
+    -fx-text-fill: #2E3B4E;
+}
+
+.card-value {
+    -fx-font-size: 32px;
+    -fx-text-fill: #3A4B63;
+}
+
+/* PieChart */
+.pie-chart {
+    -fx-pref-width: 400px;
+    -fx-pref-height: 300px;
+}

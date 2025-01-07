@@ -1,11 +1,15 @@
 package controller.secretaire;
 
+import dao.UserImp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -14,8 +18,51 @@ import javafx.scene.layout.HBox;
 
 public class DashboardController {
 
+
+
+    @FXML
+    private Label totalStudentsLabel;
+
+    @FXML
+    private Label registeredStudentsLabel;
+
+    @FXML
+    private Label nonRegisteredStudentsLabel;
+
+    @FXML
+    private PieChart studentsPieChart;
+
+    UserImp Usp = new UserImp();
+
+
+    private int totalStudents = 200;
+    private int registeredStudents = 150;
+    private int nonRegisteredStudents = totalStudents - registeredStudents;
+
+
     @FXML
     private Label welcomeText;
+
+
+    @FXML
+    public void initialize() {
+        // Remplir les labels avec des données
+        totalStudentsLabel.setText(String.valueOf(totalStudents));
+        registeredStudentsLabel.setText(String.valueOf(registeredStudents));
+        nonRegisteredStudentsLabel.setText(String.valueOf(nonRegisteredStudents));
+
+        // Remplir le graphique circulaire
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Inscrits", registeredStudents),
+                new PieChart.Data("Non Inscrits", nonRegisteredStudents)
+        );
+        studentsPieChart.setData(pieChartData);
+
+        // Style optionnel pour le graphique
+        studentsPieChart.setTitle("Répartition des Étudiants");
+        studentsPieChart.setLabelsVisible(true);
+    }
+
 
     @FXML
     private void onStatistiqueButtonClick() {
@@ -54,6 +101,8 @@ public class DashboardController {
             BorderPane root = loader.load();
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(root);
+            // Charger le CSS si nécessaire
+            scene.getStylesheets().add(getClass().getResource("vues/secretaire/styles.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
