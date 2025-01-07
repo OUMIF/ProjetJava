@@ -1,5 +1,7 @@
 package controller.Admin;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,24 +10,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import util.DatabaseConnection;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DashboardController {
 
-    @FXML
-    private Label welcomeText;
     @FXML
     private Label studentCountLabel;
     @FXML
@@ -34,34 +30,27 @@ public class DashboardController {
     private Label secretaryCountLabel;
     @FXML
     private Label moduleCountLabel;
-
     @FXML
-    private PieChart modulePieChart;
-
+    private PieChart studentModulePieChart; // For student percentages
     @FXML
-    private BarChart<String, Number> moduleBarChart;
-
+    private PieChart professorModulePieChart; // For professor percentages
+    @FXML
+    private BarChart<String, Number> moduleBarChart; // For professors and students per module
     @FXML
     private CategoryAxis moduleCategoryAxis;
-
     @FXML
     private NumberAxis studentCountYAxis;
 
-    private Connection connection;
+    private final Connection connection;
 
     public DashboardController() {
-        connection = DatabaseConnection.getInstance().getConnection();
-    }
-
-    @FXML
-    private void onStatistiqueButtonClick() {
-        loadScene("/vues/ADMIN/AdminPageInit.fxml");
+        this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @FXML
     public void initialize() {
         loadCounts();
-
+        loadCharts();
     }
 
     private void loadCounts() {
@@ -82,49 +71,99 @@ public class DashboardController {
         }
     }
 
-
-
-    @FXML
-    public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
-    }
-
-    @FXML
-    public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
-    }
-
-    @FXML
-    public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/etudiantmanagment.fxml");
-    }
-
-    @FXML
-    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
-    }
-
-    @FXML
-    private void onDesconnected(ActionEvent event) {
+    private void loadCharts() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vues/login.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
+            // Load PieChart for Student Percentage in Modules
+            ObservableList<PieChart.Data> studentData = FXCollections.observableArrayList();
+            String studentQuery = "SELECT m.nommodule, COUNT(i.idetudiant) AS student_count " +
+                    "FROM modules m LEFT JOIN inscrire i ON m.idmodule = i.idmodule " +
+                    "GROUP BY m.nommodule";
+            try (PreparedStatement stmt = connection.prepareStatement(studentQuery);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String moduleName = rs.getString("nommodule");
+                    int studentCount = rs.getInt("student_count");
+                    studentData.add(new PieChart.Data(moduleName, studentCount));
+                }
+            }
+            studentModulePieChart.setData(studentData); // Ensure PieChart is properly set with data
+
+            // Load PieChart for Professor Percentage in Modules
+            ObservableList<PieChart.Data> professorData = FXCollections.observableArrayList();
+            String professorQuery = "SELECT m.nommodule, COUNT(a.iduser) AS professor_count " +
+                    "FROM modules m LEFT JOIN assigner a ON m.idmodule = a.idmodule " +
+                    "GROUP BY m.nommodule";
+            try (PreparedStatement stmt = connection.prepareStatement(professorQuery);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String moduleName = rs.getString("nommodule");
+                    int professorCount = rs.getInt("professor_count");
+                    professorData.add(new PieChart.Data(moduleName, professorCount));
+                }
+            }
+            professorModulePieChart.setData(professorData); // Ensure PieChart is properly set with data
+
+            // Load BarChart for Students and Professors per Module
+            XYChart.Series<String, Number> studentSeries = new XYChart.Series<>();
+            XYChart.Series<String, Number> professorSeries = new XYChart.Series<>();
+            String barChartQuery = "SELECT m.nommodule, COUNT(DISTINCT i.idetudiant) AS student_count, " +
+                    "COUNT(DISTINCT a.iduser) AS professor_count " +
+                    "FROM modules m LEFT JOIN inscrire i ON m.idmodule = i.idmodule " +
+                    "LEFT JOIN assigner a ON m.idmodule = a.idmodule " +
+                    "GROUP BY m.nommodule";
+            try (PreparedStatement stmt = connection.prepareStatement(barChartQuery);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String moduleName = rs.getString("nommodule");
+                    int studentCount = rs.getInt("student_count");
+                    int professorCount = rs.getInt("professor_count");
+                    studentSeries.getData().add(new XYChart.Data<>(moduleName, studentCount));
+                    professorSeries.getData().add(new XYChart.Data<>(moduleName, professorCount));
+                }
+            }
+            moduleBarChart.getData().addAll(studentSeries, professorSeries);
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void loadScene(String fxmlPath) {
+    @FXML
+    public void onStatistiqueButtonClick(ActionEvent event) {
+        loadScene(event, "/vues/ADMIN/AdminPageInit.fxml");
+    }
+
+    @FXML
+    public void onGestiondesProfesseurButtonClick(ActionEvent event) {
+        loadScene(event, "/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
+    }
+
+    @FXML
+    public void onGestiondesSecretaireButtonClick(ActionEvent event) {
+        loadScene(event, "/vues/ADMIN/gestiondessecretaire.fxml");
+    }
+
+    @FXML
+    public void onGestiondesEtudiantButtonClick(ActionEvent event) {
+        loadScene(event, "/vues/ADMIN/etudiantmanagment.fxml");
+    }
+
+    @FXML
+    private void onGestiondesModulesButtonClick(ActionEvent event) {
+        loadScene(event, "/vues/ADMIN/GestionModule/GestionModule.fxml");
+    }
+
+    @FXML
+    private void onDesconnected(ActionEvent event) {
+        loadScene(event, "/vues/login.fxml");
+    }
+
+    private void loadScene(ActionEvent event, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            BorderPane root = loader.load();
-            Stage stage = (Stage) welcomeText.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
