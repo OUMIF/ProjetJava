@@ -15,6 +15,10 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import static java.nio.charset.StandardCharsets.*;
+import javafx.scene.control.Alert.AlertType;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.Properties;
 
 
 
@@ -45,63 +49,48 @@ public class EnvoyerMessageController {
     @FXML
     private void envoyerMessage() {
         String message = champMessage.getText();
-        String nomDestinataire = champEmailDestinataire.getText();
-        String emailExpediteur = "oumifad49@gmail.com"; // Email de l'expéditeur
+        String emailDestinataire = champEmailDestinataire.getText();
+        String emailExpediteur = "chaiberrassouhail@gmail.com"; // Adresse email de l'expéditeur
+        String motDePasseExpediteur = "ctidxqtdlbyjgumg"; // Mot de passe de l'expéditeur (utilisez un mot de passe applicatif si nécessaire)
 
         if (message.isEmpty()) {
             showAlert(AlertType.WARNING, "Champ de message vide", "Veuillez entrer un message avant d'envoyer.");
-        } else if (nomDestinataire.isEmpty()) {
-            showAlert(AlertType.WARNING, "Nom du destinataire vide", "Veuillez entrer un nom pour le destinataire.");
-        } else if (emailExpediteur.isEmpty()) {
-            showAlert(AlertType.WARNING, "Email de l'expéditeur vide", "Veuillez entrer votre email.");
+        } else if (emailDestinataire.isEmpty()) {
+            showAlert(AlertType.WARNING, "Email du destinataire vide", "Veuillez entrer un email pour le destinataire.");
         } else {
+            // Propriétés de configuration SMTP
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com"); // Serveur SMTP de Gmail
+            props.put("mail.smtp.port", "587"); // Port SMTP
+
+            // Authentification de l'expéditeur
+            Session session = Session.getInstance(props, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(emailExpediteur, motDePasseExpediteur);
+                }
+            });
+
             try {
-                // URL de l'API EmailJS
-                URL url = new URL("https://api.emailjs.com/api/v1.0/email/send");
+                // Création du message
+                Message email = new MimeMessage(session);
+                email.setFrom(new InternetAddress(emailExpediteur));
+                email.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailDestinataire));
+                email.setSubject("Nouveau message de votre application"); // Sujet de l'email
+                email.setText(message); // Corps du message
 
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setDoOutput(true);
-                connection.setRequestProperty("Content-Type", "application/json");
-                connection.setRequestProperty("Authorization", "Bearer " + "WFEgUGVcXRqRqetkUvGhw"); // Inclure la clé privée ici
+                // Envoi du message
+                Transport.send(email);
 
-                String EMAILJS_USER_ID = "5dga8E5uMM7IgtlQI"; // Remplacez par votre clé publique EmailJS
-                String EMAILJS_SERVICE_ID = "service_h410d6b"; // Remplacez par votre service ID
-                String EMAILJS_TEMPLATE_ID = "template_bg32h3q"; // Remplacez par votre template ID
+                // Afficher une confirmation
+                showAlert(AlertType.INFORMATION, "Message envoyé", "Votre message a été envoyé avec succès.");
+                champMessage.clear();
 
-                // Échapper les caractères spéciaux dans le message
-                String messageEscaped = message.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n").replace("\r", "\\r");
-
-                // Créer le corps de la requête JSON
-                String jsonInputString = String.format(
-                        "{\"service_id\":\"%s\",\"template_id\":\"%s\",\"user_id\":\"%s\",\"template_params\":{\"to_email\":\"%s\",\"from_name\":\"%s\",\"from_email\":\"%s\",\"message\":\"%s\"}}",
-                        EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_USER_ID, nomDestinataire, emailExpediteur, emailExpediteur, messageEscaped
-                );
-
-                // Écrire les données dans la requête
-                try (OutputStream os = connection.getOutputStream()) {
-                    byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-                    os.write(input, 0, input.length);
-                }
-
-                // Lire la réponse de l'API
-                int responseCode = connection.getResponseCode();
-                InputStream responseStream = (responseCode == HttpURLConnection.HTTP_OK)
-                        ? connection.getInputStream()
-                        : connection.getErrorStream();
-
-                String responseMessage = new String(responseStream.readAllBytes(), StandardCharsets.UTF_8);
-
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    showAlert(AlertType.INFORMATION, "Message envoyé", "Votre message a été envoyé avec succès.");
-                    champMessage.clear();
-                } else {
-                    showAlert(AlertType.ERROR, "Erreur d'envoi", "Une erreur est survenue lors de l'envoi de l'email. Détails : " + responseMessage);
-                }
-
-            } catch (Exception e) {
+            } catch (MessagingException e) {
                 e.printStackTrace();
-                showAlert(AlertType.ERROR, "Erreur d'envoi", "Une erreur est survenue lors de l'envoi de l'email.");
+                showAlert(AlertType.ERROR, "Erreur d'envoi", "Une erreur est survenue lors de l'envoi de l'email : " + e.getMessage());
             }
         }
     }
@@ -172,4 +161,5 @@ public class EnvoyerMessageController {
     private void onGestiondesModulesButtonClick() {
         System.out.println("Gestion des Modules");
     }
-}
+
+    }

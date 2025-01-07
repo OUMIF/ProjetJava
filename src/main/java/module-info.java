@@ -2,11 +2,12 @@ module org.example.projetjava {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires java.desktop;
 
     requires itextpdf;
     requires layout;
     requires kernel;
+    requires jakarta.mail;
+    requires java.datatransfer;
 
     exports controller; // Add this line to export the controller package
     opens controller to javafx.fxml;
