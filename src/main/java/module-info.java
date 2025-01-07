@@ -7,7 +7,7 @@ module org.example.projetjava {
     requires layout;
     requires kernel;
     requires jakarta.mail;
-    requires java.datatransfer;
+    requires java.desktop;
 
     exports controller; // Add this line to export the controller package
     opens controller to javafx.fxml;
