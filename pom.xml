@@ -47,6 +47,15 @@
     </dependency>
 
 
+
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <version>1.6.7</version> <!-- Assurez-vous d'utiliser une version compatible -->
+    </dependency>
+
+
+
     <dependency>
       <groupId>com.itextpdf</groupId>
       <artifactId>itext7-core</artifactId>

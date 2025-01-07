@@ -374,6 +374,32 @@ public class ProfesseurImp {
         }
         return false;
     }
+    public List<Professeur> searchProfByName(String name) {
+        List<Professeur> professeurs = new ArrayList<>();
+        String query = "SELECT * FROM professeurs WHERE nom LIKE ? OR prenom LIKE ?";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = co.prepareStatement(query);
+            stmt.setString(1, "%" + name + "%");
+            stmt.setString(2, "%" + name + "%");
+            rs= stmt.executeQuery();
+
+            while (rs.next()) {
+                Professeur professeur = new Professeur(
+                        rs.getInt("iduser"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("specialite")
+                );
+                professeurs.add(professeur);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return professeurs;
+    }
+
 
 
 
