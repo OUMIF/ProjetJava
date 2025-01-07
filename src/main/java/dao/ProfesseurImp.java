@@ -377,11 +377,13 @@ public class ProfesseurImp {
     public List<Professeur> searchProfByName(String name) {
         List<Professeur> professeurs = new ArrayList<>();
         String query = "SELECT * FROM professeurs WHERE nom LIKE ? OR prenom LIKE ?";
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = co.prepareStatement(query);
             stmt.setString(1, "%" + name + "%");
             stmt.setString(2, "%" + name + "%");
-            ResultSet rs = stmt.executeQuery();
+            rs= stmt.executeQuery();
 
             while (rs.next()) {
                 Professeur professeur = new Professeur(
