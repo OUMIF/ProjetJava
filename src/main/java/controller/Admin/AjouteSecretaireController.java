@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import model.User;
 import model.Secraitaires;
@@ -17,8 +16,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.io.IOException;
 
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Random;
 
 public class AjouteSecretaireController {
@@ -144,42 +144,30 @@ public class AjouteSecretaireController {
         }
     }
 
-    // Other event handler methods can be kept as they are
-    public void onStatistiqueButtonClick(ActionEvent actionEvent) {
-
-    }
-
-
-    public void onGestiondesModuleButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
-    }
-
-
-
-
     @FXML
-    private void onStatistiqueButtonClick() {
+    public void onStatistiqueButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/AdminPageInit.fxml");
     }
+
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
     }
+
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
     }
+
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/etudiantmanagment.fxml");
-
     }
+
     @FXML
-    private void onGestiondesModulesButtonClick(ActionEvent actionEvent) {
+    public void onGestiondesModuleButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml");
     }
-
-
 
     @FXML
     private void onDesconnected(ActionEvent event) {
@@ -194,7 +182,6 @@ public class AjouteSecretaireController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void loadScene(String fxmlPath) {
@@ -209,6 +196,7 @@ public class AjouteSecretaireController {
             e.printStackTrace();
         }
     }
+
 
 
     public void onEmailFieldChanged(KeyEvent keyEvent) {

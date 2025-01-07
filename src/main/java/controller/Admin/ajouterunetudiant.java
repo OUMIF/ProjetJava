@@ -172,13 +172,13 @@ public class ajouterunetudiant {
     // Handle "Gestion des Professeurs" button click event
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked a ");
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
     }
 
     // Handle "Gestion des Secrétaires" button click event
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        System.out.println("button clicked b " );
+        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
     }
 
     // Handle "Gestion des Étudiants" button click event
