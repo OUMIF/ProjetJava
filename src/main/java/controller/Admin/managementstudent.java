@@ -189,12 +189,14 @@ public class managementstudent {
     }
     @FXML
     public void onGestiondesProfesseurButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
+
+        loadScene("/vues/ADMIN/GestionModule/GestionModule");
     }
     @FXML
     public void onGestiondesSecretaireButtonClick(ActionEvent actionEvent) {
-        loadScene("/vues/ADMIN/gestiondessecretaire.fxml");
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml");
     }
+
     @FXML
     public void onGestiondesEtudiantButtonClick(ActionEvent actionEvent) {
         loadScene("/vues/ADMIN/etudiantmanagment.fxml");

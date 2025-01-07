@@ -41,6 +41,8 @@ public class SecretaireController {
     private ObservableList<User> secretaireList;
     private final SecretaireImp secretaireDAO = new SecretaireImp();
     private User selectedSecretary;
+
+
     private void loadSecretaires() {
         try {
             secretaireTable.getItems().clear();  // Clear existing data to avoid duplicates

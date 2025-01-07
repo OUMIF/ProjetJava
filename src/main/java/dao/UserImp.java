@@ -62,6 +62,39 @@ public class UserImp {
         return null; // Aucun utilisateur trouvé
     }
 
+    public int getNbrEtudiant() {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql="Select count(*) from etudiants ";
+        try{
+            ps=conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+
+        } catch(SQLException e){
+            System.out.println(e);
+        }
+        return 0;
+    }
+    public int getNbrnonInscEtudiant() {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql="Select count(*) from etudiants e Join inscrire i On i.idetudiant = e.idetudiant where idmodule = 4  ";
+        try{
+            ps=conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+
+        } catch(SQLException e){
+            System.out.println(e);
+        }
+        return 0;
+    }
+
 
 
 

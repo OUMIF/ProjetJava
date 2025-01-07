@@ -10,7 +10,6 @@ public class DatabaseConnection {
     private String url = "jdbc:postgresql://localhost:5432/ProjetJava";
     private final String user = "postgres";
     private final String password = "2003";
-
     private DatabaseConnection() {
         try {
             // Load MySQL JDBC driver
