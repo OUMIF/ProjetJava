@@ -1,5 +1,6 @@
 package controller.secretaire;
 
+import dao.EtudiantImp;
 import dao.UserImp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,11 +33,12 @@ public class DashboardController {
     @FXML
     private PieChart studentsPieChart;
 
+    UserImp userImp = new UserImp();
 
 
-    private int totalStudents = 200;
-    private int registeredStudents = 150;
-    private int nonRegisteredStudents = totalStudents - registeredStudents;
+    private int totalStudents = userImp.getNbrEtudiant();
+    private int nonRegisteredStudents = userImp.getNbrnonInscEtudiant();
+    private int registeredStudents = totalStudents - nonRegisteredStudents;
 
 
     @FXML
