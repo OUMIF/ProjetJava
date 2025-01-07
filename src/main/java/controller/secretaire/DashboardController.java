@@ -32,7 +32,6 @@ public class DashboardController {
     @FXML
     private PieChart studentsPieChart;
 
-    UserImp Usp = new UserImp();
 
 
     private int totalStudents = 200;
@@ -101,8 +100,6 @@ public class DashboardController {
             BorderPane root = loader.load();
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(root);
-            // Charger le CSS si nécessaire
-            scene.getStylesheets().add(getClass().getResource("vues/secretaire/styles.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
