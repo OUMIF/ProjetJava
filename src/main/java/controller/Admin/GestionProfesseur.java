@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import model.Etudiant;
 import model.Module;
 import model.Professeur;
 import model.User;
@@ -220,11 +221,20 @@ public class GestionProfesseur {
         loadProfesseurs();
     }
 
-    @FXML
     public void onSearchButtonClick() {
-     System.out.println("button clicked ");
+        String searchQuery = searchField.getText().trim();  // Retrieve the text from the search field
+        if (!searchQuery.isEmpty()) {
+            List<Professeur> professeurs = professeurImp.searchProfByName(searchQuery);
+            if (professeurs != null && !professeurs.isEmpty()) {
+                professeursTable.getItems().setAll(professeurs);  // Display the professors in the table
+            } else {
+                System.out.println("No professors found with the given name.");
+                // Optionally, show an alert message to the user
+            }
+        } else {
+            System.out.println("Please enter a search query.");
+        }
     }
-
     @FXML
     public void onAddButtonClick() {
         loadScene("/vues/ADMIN/GestionProfesseurs/AjoutProfesseur.fxml");
