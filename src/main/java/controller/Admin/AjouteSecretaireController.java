@@ -201,4 +201,7 @@ public class AjouteSecretaireController {
 
     public void onEmailFieldChanged(KeyEvent keyEvent) {
     }
+
+    public void onEmailFieldChanged(javafx.scene.input.KeyEvent keyEvent) {
+    }
 }
