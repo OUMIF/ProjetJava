@@ -1,6 +1,11 @@
 package controller.Admin;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -8,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -16,6 +22,8 @@ import java.nio.charset.StandardCharsets;
 
 import static java.nio.charset.StandardCharsets.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
@@ -124,6 +132,23 @@ public class EnvoyerMessageController {
         cancelButton.setStyle("-fx-background-color: #f44336;");
     }
 
+
+    private void loadScene(String fxmlPath, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(AlertType.ERROR, "Erreur de chargement",
+                    "Impossible de charger la page : " + e.getMessage());
+        }
+    }
+
+    // Méthode pour afficher une alerte
     private void showAlert(AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -133,33 +158,34 @@ public class EnvoyerMessageController {
     }
 
     @FXML
-    private void onDesconnected() {
-        System.out.println("Utilisateur déconnecté.");
+    private void onStatistiqueButtonClick(ActionEvent event) {
+        loadScene("/vues/ADMIN/AdminPageInit.fxml", event);
     }
 
     @FXML
-    private void onStatistiqueButtonClick() {
-        System.out.println("Statistiques");
+    private void onGestiondesProfesseurButtonClick(ActionEvent event) {
+        loadScene("/vues/ADMIN/GestionProfesseurs/gestionProf.fxml", event);
     }
 
     @FXML
-    private void onGestiondesProfesseurButtonClick() {
-        System.out.println("Gestion des Professeurs");
+    private void onGestiondesSecretaireButtonClick(ActionEvent event) {
+        loadScene("/vues/ADMIN/gestiondessecretaire.fxml", event);
     }
 
     @FXML
-    private void onGestiondesSecretaireButtonClick() {
-        System.out.println("Gestion des Secrétaires");
+    private void onGestiondesEtudiantButtonClick(ActionEvent event) {
+        loadScene("/vues/ADMIN/etudiantmanagment.fxml", event);
     }
 
     @FXML
-    private void onGestiondesEtudiantButtonClick() {
-        System.out.println("Gestion des Étudiants");
+    private void onGestiondesModulesButtonClick(ActionEvent event) {
+        loadScene("/vues/ADMIN/GestionModule/GestionModule.fxml", event);
     }
 
     @FXML
-    private void onGestiondesModulesButtonClick() {
-        System.out.println("Gestion des Modules");
+    private void onDesconnected(ActionEvent event) {
+        loadScene("/vues/login.fxml", event);
     }
+}
 
-    }
+
