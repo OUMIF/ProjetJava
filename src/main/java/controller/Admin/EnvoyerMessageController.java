@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -58,8 +59,8 @@ public class EnvoyerMessageController {
     private void envoyerMessage() {
         String message = champMessage.getText();
         String emailDestinataire = champEmailDestinataire.getText();
-        String emailExpediteur = "chaiberrassouhail@gmail.com"; // Adresse email de l'expéditeur
-        String motDePasseExpediteur = "ctidxqtdlbyjgumg"; // Mot de passe de l'expéditeur (utilisez un mot de passe applicatif si nécessaire)
+        String emailExpediteur = "puturmaail"; // Adresse email de l'expéditeur
+        String motDePasseExpediteur = "mdp"; // Mot de passe de l'expéditeur (utilisez un mot de passe applicatif si nécessaire)
 
         if (message.isEmpty()) {
             showAlert(AlertType.WARNING, "Champ de message vide", "Veuillez entrer un message avant d'envoyer.");
